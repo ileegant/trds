@@ -18,7 +18,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trds.vercel.app"),
+  metadataBase: new URL("https://trds-tau.vercel.app"),
 
   title: {
     default: "TRDS | Генератор для Threads",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TRDS | Прокачай свій Threads",
     description: "Генератор статистики та мемів для твого профілю.",
-    url: "https://trds.vercel.app",
+    url: "https://trds-tau.vercel.app",
     siteName: "TRDS",
     locale: "uk_UA",
     type: "website",
