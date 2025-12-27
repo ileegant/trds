@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Unbounded, Manrope } from "next/font/google";
 import "./globals.css";
-
 import { Header } from "@/components/layout/Header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-unbound",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-manrope",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -90,7 +91,7 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-white text-slate-900`}
+        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-white text-slate-900`}
       >
         <Header />
         <main className="flex-1 flex flex-col">{children}</main>
