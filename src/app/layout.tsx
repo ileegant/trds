@@ -49,21 +49,6 @@ export const metadata: Metadata = {
     siteName: "TRDS",
     locale: "uk_UA",
     type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "TRDS Preview",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "TRDS | Інструменти для Threads",
-    description: "Статистика, меми та інструменти для росту.",
-    images: ["/og-image.png"],
   },
 
   icons: {
