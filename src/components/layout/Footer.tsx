@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, AtSign } from "lucide-react"; // AtSign схожий на лого Threads, або використаємо SVG нижче
+import { Github } from "lucide-react"; // AtSign схожий на лого Threads, або використаємо SVG нижче
 
 export function Footer() {
   return (
