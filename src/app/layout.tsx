@@ -3,6 +3,7 @@ import { Unbounded, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Snow } from "@/components/ui/Snow";
+import { Footer } from "@/components/layout/Footer";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -96,7 +97,8 @@ export default function RootLayout({
       >
         <Snow />
         <Header />
-        <main className="flex-1 flex flex-col pt-16">{children}</main>
+        <main className="flex-1 flex flex-col py-16">{children}</main>
+        <Footer />
       </body>
     </html>
   );
