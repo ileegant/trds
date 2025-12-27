@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-unbound",
+  variable: "--font-unbounded",
   display: "swap",
 });
 
@@ -91,10 +91,10 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body
-        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-white text-slate-900`}
+        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-[#0a0a0a] text-white`}
       >
         <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main className="flex-1 flex flex-col pt-16">{children}</main>
       </body>
     </html>
   );

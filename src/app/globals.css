@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  --font-sans: var(--font-manrope);
+}
+
+/* 👇 СТВОРЮЄМО КЛАС ВРУЧНУ */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-unbounded), sans-serif !important;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
