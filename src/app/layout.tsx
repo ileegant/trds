@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Unbounded, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
+import { Snow } from "@/components/ui/Snow";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -93,6 +94,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-[#0a0a0a] text-white`}
       >
+        <Snow />
         <Header />
         <main className="flex-1 flex flex-col pt-16">{children}</main>
       </body>
