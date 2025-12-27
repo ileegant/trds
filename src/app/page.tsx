@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CreditCard, BarChart3, Wand2, Flame } from "lucide-react";
+import { ArrowRight, CreditCard, BarChart3, Wand2 } from "lucide-react";
 
 export default function Home() {
   return (
