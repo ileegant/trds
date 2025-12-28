@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Unbounded, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
-import { Snow } from "@/components/ui/Snow";
 import { Footer } from "@/components/layout/Footer";
+import { Snow } from "@/components/ui/Snow";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -18,7 +18,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trds-tau.vercel.app"),
+  metadataBase: new URL("https://trds.fun"),
 
   title: {
     default: "TRDS | Генератор для Threads",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TRDS | Прокачай свій Threads",
     description: "Генератор статистики та мемів для твого профілю.",
-    url: "https://trds-tau.vercel.app",
+    url: "https://trds.fun",
     siteName: "TRDS",
     locale: "uk_UA",
     type: "website",
