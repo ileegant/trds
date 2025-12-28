@@ -16,18 +16,19 @@ export default function Home() {
       </div>
 
       {/* 2. ГОЛОВНИЙ ЗАГОЛОВОК */}
-      <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white mb-8 max-w-6xl leading-[1.05]">
+      <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white mb-8 max-w-6xl leading-[1.05]">
         Твій Threads <br />
         {/* 👇 NARDO GREY ПАЛІТРА: Холодний сталевий градієнт */}
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 via-slate-300 to-white animate-gradient-x pb-2">
-          на максимум
+          роздає базу
         </span>
       </h1>
 
       {/* 3. Опис */}
-      <p className="text-m md:text-xl text-neutral-500 mb-12 max-w-2xl leading-relaxed">
-        Генератор мемів, глибока аналітика та інструменти для створення
-        вірусного контенту.
+      <p className="text-sm md:text-xl text-neutral-500 mb-12 max-w-2xl leading-relaxed">
+        Побудовано для тих, хто втомився від рандому. Генеруй контент, який
+        чіпляє, аналізуй те, що реально працює, і масштабуй свій вплив без
+        зайвих рухів.
       </p>
 
       {/* 4. КНОПКИ EXPLORE (Neo-Brutalism Nardo Style) */}
@@ -48,23 +49,23 @@ export default function Home() {
         >
           {/* Іконка стає сталевою при наведенні */}
           <Wand2 className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
-          <span>Створити мем</span>
+          <span>Згенерувати мем</span>
         </Link>
       </div>
 
       {/* 5. БЛОК MONOBANK (Stealth Mode) */}
-      <div className="flex flex-col items-center gap-6 mt-12">
+      <div className="flex flex-col items-center gap-6 mt-6">
         {/* Розділювач */}
         <div className="flex items-center gap-4 opacity-30">
           <div className="h-[1px] w-12 bg-white" />
           <span className="text-slate-500 text-xs font-mono uppercase tracking-widest">
-            Donation Area
+            ЗОНА ПІДТРИМКИ
           </span>
           <div className="h-[1px] w-12 bg-white" />
         </div>
 
         {/* Мемний заклик */}
-        <p className="text-neutral-500 text-sm max-w-md font-mono">
+        <p className="text-neutral-500 text-xs md:text-sm max-w-lg font-mono">
           <span className="text-slate-300 font-bold">⚠️ Увага:</span> Цей код
           працює на каві та ненависті до русні.
           <br />
