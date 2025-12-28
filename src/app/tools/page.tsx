@@ -1,15 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  BarChart3,
-  Bomb,
-  Flame,
-  Ghost,
-  Sparkles,
-  Fingerprint,
-  Search,
-  Bot,
-} from "lucide-react";
+import { ArrowUpRight, Bomb, Fingerprint } from "lucide-react";
 
 // Масив інструментів (щоб легко додавати нові)
 const tools = [

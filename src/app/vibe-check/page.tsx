@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import Link from "next/link";
 import { toBlob } from "html-to-image";
 import Barcode from "react-barcode";
 import {
-  MoveLeft,
   Search,
   Share2,
   RefreshCw,
