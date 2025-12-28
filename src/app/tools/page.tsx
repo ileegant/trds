@@ -13,65 +13,65 @@ import {
 
 // Масив інструментів (щоб легко додавати нові)
 const tools = [
-  {
-    id: "roast",
-    title: "Жорстка прожарка",
-    description:
-      "AI знищить твоє его за 3 секунди. Тільки для тих, у кого сталеві нерви.",
-    icon: Flame,
-    href: "/tools/roast",
-    tag: "HOT",
-    tagColor: "bg-orange-500/10 text-orange-400 border-orange-500/20",
-  },
-  {
-    id: "stats",
-    title: "Глибока аналітика",
-    description:
-      "Розбір польотів: хто лайкає, хто ігнорить, і чому твої охоплення впали.",
-    icon: BarChart3,
-    href: "/tools/stats",
-    tag: "STABLE",
-    tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  },
-  {
-    id: "memes",
-    title: "Мем-генератор",
-    description:
-      "Перетвори свої нудні пости на мемний контент. Автоматична підстановка тексту.",
-    icon: Sparkles,
-    href: "/tools/memes",
-    tag: "AI V2",
-    tagColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  },
-  {
-    id: "ghosts",
-    title: "Детектор привидів",
-    description:
-      "Знайти тих, хто підписався, але ніколи не лайкає. Час для чистки.",
-    icon: Ghost,
-    href: "/tools/ghosts",
-    tag: null,
-  },
+  // {
+  //   id: "roast",
+  //   title: "Жорстка прожарка",
+  //   description:
+  //     "AI знищить твоє его за 3 секунди. Тільки для тих, у кого сталеві нерви.",
+  //   icon: Flame,
+  //   href: "/tools/roast",
+  //   tag: "HOT",
+  //   tagColor: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  // },
+  // {
+  //   id: "stats",
+  //   title: "Глибока аналітика",
+  //   description:
+  //     "Розбір польотів: хто лайкає, хто ігнорить, і чому твої охоплення впали.",
+  //   icon: BarChart3,
+  //   href: "/tools/stats",
+  //   tag: "STABLE",
+  //   tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  // },
+  // {
+  //   id: "memes",
+  //   title: "Мем-генератор",
+  //   description:
+  //     "Перетвори свої нудні пости на мемний контент. Автоматична підстановка тексту.",
+  //   icon: Sparkles,
+  //   href: "/tools/memes",
+  //   tag: "AI V2",
+  //   tagColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  // },
+  // {
+  //   id: "ghosts",
+  //   title: "Детектор привидів",
+  //   description:
+  //     "Знайти тих, хто підписався, але ніколи не лайкає. Час для чистки.",
+  //   icon: Ghost,
+  //   href: "/tools/ghosts",
+  //   tag: null,
+  // },
   {
     id: "vibe",
     title: "Vibe Check",
     description:
       "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
     icon: Fingerprint,
-    href: "/tools/vibe",
+    href: "/vibe-check",
     tag: "NEW",
     tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   },
-  {
-    id: "reply",
-    title: "Auto-Reply Bot",
-    description:
-      "Генерує дотепні відповіді хейтерам, щоб ти не витрачав свій час.",
-    icon: Bot,
-    href: "/tools/reply",
-    tag: "BETA",
-    tagColor: "bg-slate-500/10 text-slate-400 border-slate-500/20",
-  },
+  // {
+  //   id: "reply",
+  //   title: "Auto-Reply Bot",
+  //   description:
+  //     "Генерує дотепні відповіді хейтерам, щоб ти не витрачав свій час.",
+  //   icon: Bot,
+  //   href: "/tools/reply",
+  //   tag: "BETA",
+  //   tagColor: "bg-slate-500/10 text-slate-400 border-slate-500/20",
+  // },
 ];
 
 export default function BrowsePage() {
@@ -84,31 +84,14 @@ export default function BrowsePage() {
       <main className="container mx-auto px-4 py-20 max-w-7xl">
         {/* 1. HEADER SECTION */}
         <div className="flex flex-col items-center text-center mb-20">
-          {/* Індикатор користувача (Mockup) */}
-          <div className="mb-8 animate-fade-in-up">
-            <div className="inline-flex items-center gap-3 px-4 py-2 border border-neutral-800 bg-neutral-900/50 backdrop-blur-md rounded-none">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest">
-                Target:{" "}
-                <span className="text-white font-bold">@your_nickname</span>
-              </span>
-              <Link
-                href="/change-user"
-                className="ml-2 p-1 hover:bg-neutral-800 transition-colors rounded-sm"
-              >
-                <Search className="w-3 h-3 text-neutral-500" />
-              </Link>
-            </div>
-          </div>
-
-          <h1 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
+          <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
             Обери свій <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 via-slate-200 to-white">
               інструмент
             </span>
           </h1>
 
-          <p className="text-neutral-500 text-sm md:text-lg max-w-2xl font-mono leading-relaxed">
+          <p className="text-neutral-500 text-xs md:text-lg max-w-2xl font-mono leading-relaxed">
             Кожен модуль — це окремий скрипт для прокачки твого профілю. Обирай
             з розумом, використовуй з обережністю.
           </p>
@@ -164,11 +147,9 @@ export default function BrowsePage() {
           <div className="relative flex flex-col items-center justify-center h-full min-h-[250px] border border-dashed border-neutral-800 bg-transparent p-8 opacity-50 cursor-not-allowed">
             <Bomb className="w-8 h-8 text-neutral-700 mb-4" />
             <span className="text-xs font-mono uppercase tracking-widest text-neutral-600">
-              Secret Module
+              Секретний Модуль
             </span>
-            <span className="text-xs text-neutral-700 mt-1">
-              Coming Soon...
-            </span>
+            <span className="text-xs text-neutral-700 mt-1">Скоро Буде...</span>
           </div>
         </div>
 

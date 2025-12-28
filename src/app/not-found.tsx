@@ -53,10 +53,10 @@ export default function NotFound() {
       <div className="mt-10">
         <Link
           href="/"
-          className="group relative inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-black border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_#ef4444] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#ef4444] hover:translate-x-[2px] hover:translate-y-[2px] transition-all rounded-none"
+          className="font-display group relative inline-flex items-center justify-center gap-3 px-8 py-3 bg-white text-black border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_#ef4444] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#ef4444] hover:translate-x-[2px] hover:translate-y-[2px] transition-all rounded-none"
         >
           <MoveLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>З'їб*тись в ужасі</span>
+          <span>З'їбатись в ужасі</span>
         </Link>
       </div>
 

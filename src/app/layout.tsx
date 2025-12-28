@@ -78,11 +78,13 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body
-        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-[#0a0a0a] text-white`}
+        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-neutral-950 text-white`}
       >
         <Snow />
         <Header />
-        <main className="flex-1 flex flex-col py-16">{children}</main>
+        <main className="flex-1 flex flex-col px-4 pt-8 pb-6 bg-neutral-950">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

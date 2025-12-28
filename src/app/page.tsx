@@ -3,9 +3,9 @@ import { ArrowRight, CreditCard, BarChart3, Wand2 } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[85vh] px-4 text-center overflow-hidden bg-neutral-950">
+    <div className="relative flex flex-col items-center justify-center min-h-[85vh] text-center overflow-hidden bg-neutral-950">
       {/* 1. Верхній бейдж */}
-      <div className="mb-8">
+      <div className="mb-8 mt-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs md:text-sm font-medium text-neutral-400 backdrop-blur-xl hover:bg-white/10 hover:text-white transition-colors cursor-default">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
@@ -16,7 +16,7 @@ export default function Home() {
       </div>
 
       {/* 2. ГОЛОВНИЙ ЗАГОЛОВОК */}
-      <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white mb-8 max-w-6xl leading-[1.05]">
+      <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white mb-6 max-w-6xl leading-[1.05]">
         Твій Threads <br />
         {/* 👇 NARDO GREY ПАЛІТРА: Холодний сталевий градієнт */}
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 via-slate-300 to-white animate-gradient-x pb-2">
@@ -25,14 +25,14 @@ export default function Home() {
       </h1>
 
       {/* 3. Опис */}
-      <p className="text-sm md:text-xl text-neutral-500 mb-12 max-w-2xl leading-relaxed">
-        Побудовано для тих, хто втомився від рандому. Генеруй контент, який
-        чіпляє, аналізуй те, що реально працює, і масштабуй свій вплив без
-        зайвих рухів.
+      <p className="text-xs md:text-xl text-neutral-500 mb-8 max-w-2xl leading-relaxed">
+        Кидай нік — отримуй діагноз. Дізнайся, який в тебе реально вайб: ти
+        база, крінж чи головний душніла стрічки. Жодної нудної статистики,
+        тільки чистий фан і факти.
       </p>
 
       {/* 4. КНОПКИ EXPLORE (Neo-Brutalism Nardo Style) */}
-      <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto mb-20">
+      <div className="flex flex-col sm:flex-row gap-4 sm:w-auto my-8">
         {/* 👇 Кнопка 1 (Основна): Біла з тінню кольору мокрого асфальту */}
         <Link
           href="/stats"
@@ -44,8 +44,8 @@ export default function Home() {
 
         {/* 👇 Кнопка 2 (Другорядна): Чорна з білою тінню, ховер в Nardo Grey */}
         <Link
-          href="/browse"
-          className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
+          href="/tools"
+          className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-2 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
         >
           {/* Іконка стає сталевою при наведенні */}
           <Wand2 className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
@@ -67,7 +67,7 @@ export default function Home() {
         {/* Мемний заклик */}
         <p className="text-neutral-500 text-xs md:text-sm max-w-lg font-mono">
           <span className="text-slate-300 font-bold">⚠️ Увага:</span> Цей код
-          працює на каві та ненависті до русні.
+          працює на ненависті до русні.
           <br />
           Підтримай розробника, щоб фікси виходили частіше!
         </p>
@@ -96,7 +96,11 @@ export default function Home() {
 
         {/* Дрібний підпис */}
         <p className="text-[10px] text-neutral-700 font-mono uppercase tracking-widest">
-          100% донатів йдуть на розвиток TRDS 🇺🇦
+          55% донатів йдуть на корм Мурзіку
+          <br />
+          30% донатів йдуть на ЗСУ
+          <br />
+          15% донатів йдуть на каву
         </p>
       </div>
 
