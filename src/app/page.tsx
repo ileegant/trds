@@ -44,12 +44,12 @@ export default function Home() {
 
         {/* 👇 Кнопка 2 (Другорядна): Чорна з білою тінню, ховер в Nardo Grey */}
         <Link
-          href="/memes"
+          href="/browse"
           className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
         >
           {/* Іконка стає сталевою при наведенні */}
           <Wand2 className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
-          <span>Згенерувати мем</span>
+          <span>Згенерувати</span>
         </Link>
       </div>
 
