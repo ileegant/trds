@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Unbounded, Manrope } from "next/font/google";
+import Script from "next/script"; // 1. Імпортуємо Script
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -77,6 +78,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk">
+      <head>
+        {/* 2. Google Analytics Script */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-B9NP4D2S3P"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-B9NP4D2S3P');
+          `}
+        </Script>
+      </head>
       <body
         className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-neutral-950 text-white`}
       >
