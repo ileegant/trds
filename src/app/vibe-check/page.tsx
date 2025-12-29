@@ -318,14 +318,14 @@ export default function VibeCheckPage() {
             <div className="relative w-full max-w-[380px] perspective-1000 mb-6">
               <div
                 ref={receiptRef}
-                className="w-full bg-transparent flex justify-center p-1"
+                className="w-full bg-black flex justify-center p-1"
               >
                 <div
-                  className="w-full px-4 py-4 shadow-2xl relative text-black transition-colors duration-500 ease-in-out"
+                  className="w-full px-4 py-4 relative text-black"
                   style={{ backgroundColor: receiptBg }}
                 >
                   <div
-                    className="absolute top-0 left-0 w-full h-4 -mt-2 rotate-180 transition-all duration-500 ease-in-out"
+                    className="absolute top-0 left-0 w-full h-4 -mt-2"
                     style={{
                       backgroundImage: `radial-gradient(circle, transparent 50%, ${receiptBg} 50%)`,
                       backgroundSize: "16px 16px",
@@ -432,7 +432,7 @@ export default function VibeCheckPage() {
                   </div>
 
                   <div
-                    className="absolute bottom-0 left-0 w-full h-4 -mb-2 transition-all duration-500"
+                    className="absolute bottom-0 left-0 w-full h-4 -mb-2"
                     style={{
                       backgroundImage: `radial-gradient(circle, transparent 50%, ${receiptBg} 50%)`,
                       backgroundSize: "16px 16px",
