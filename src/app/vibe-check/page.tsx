@@ -256,7 +256,7 @@ export default function VibeCheckPage() {
   // State
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loadingStep, setLoadingStep] = useState("");
+  const [_, setLoadingStep] = useState("");
   const [result, setResult] = useState<VibeResult | null>(null);
   const [userLocation, setUserLocation] = useState("Локація визначається...");
   const [errorMsg, setErrorMsg] = useState("");
