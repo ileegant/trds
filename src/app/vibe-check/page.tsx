@@ -142,7 +142,7 @@ export default function VibeCheckPage() {
 
       if (!response.ok) {
         clearInterval(interval);
-        // setLoading(false);
+        setLoading(false);
         setLoadingStep("");
 
         let message = "";
@@ -181,10 +181,10 @@ export default function VibeCheckPage() {
       console.warn("Global Error (Network etc)", error);
       clearInterval(interval);
 
-      // setLoading(false);
+      setLoading(false);
       showError("Немає з'єднання з сервером 😢");
     } finally {
-      // if (!result) setLoading(false);
+      if (!result) setLoading(false);
     }
   };
 
