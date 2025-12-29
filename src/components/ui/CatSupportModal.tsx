@@ -1,4 +1,3 @@
-import { Cat } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
 interface CatSupportModalProps {
