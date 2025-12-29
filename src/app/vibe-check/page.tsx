@@ -1,12 +1,7 @@
 "use client";
 
 import { SITE_CONFIG, BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
-import {
-  LOADING_PHRASES,
-  ARCHETYPES_LIST,
-  SUPERPOWERS_LIST,
-  ROASTS_LIST,
-} from "@/lib/content";
+import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { toBlob } from "html-to-image";
@@ -118,16 +113,6 @@ export default function VibeCheckPage() {
     setLoading(true);
     setResult(null);
 
-    let stepIndex = 0;
-    setLoadingStep(LOADING_PHRASES[0]);
-
-    const interval = setInterval(() => {
-      stepIndex++;
-      if (stepIndex < LOADING_PHRASES.length) {
-        setLoadingStep(LOADING_PHRASES[stepIndex]);
-      }
-    }, 800);
-
     try {
       const responsePromise = fetch("/api/get-threads", {
         method: "POST",
@@ -141,7 +126,6 @@ export default function VibeCheckPage() {
       ]);
 
       if (!response.ok) {
-        clearInterval(interval);
         setLoading(false);
         setLoadingStep("");
 
@@ -172,14 +156,12 @@ export default function VibeCheckPage() {
       const postsData = data.posts || [];
       const avatarData = data.user?.avatar || null;
 
-      clearInterval(interval);
       setLoadingStep("Фіналізуємо чек...");
 
       const aiResult = generateVibe(cleanNick, postsData, avatarData);
       setResult(aiResult);
     } catch (error) {
       console.warn("Global Error (Network etc)", error);
-      clearInterval(interval);
 
       setLoading(false);
       showError("Немає з'єднання з сервером 😢");
