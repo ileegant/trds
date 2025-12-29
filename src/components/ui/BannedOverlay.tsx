@@ -46,15 +46,20 @@ export default function BannedOverlay() {
 
       <div className="mt-6 space-y-4 max-w-lg mx-auto font-mono text-sm md:text-base leading-relaxed text-neutral-400">
         <p>
-          Система зафіксувала критичне{" "}
+          Система зафіксувала критичнеи
+          <br />
           <span className="text-white font-bold underline decoration-red-500 decoration-wavy">
-            ПЕРЕВИЩЕННЯ ТОННАЖУ
+            ПЕРЕВИЩЕННЯ ДАЛБАЄБІЗМУ
           </span>
           .
         </p>
         <p>
-          Наш сервер не гумовий, і твоя широка кістка тут не пролізе. Вхід
-          дозволено тільки ельфійкам до{" "}
+          Наш сервер не гумовий, тому вафлі та жирухи тут не пролізуть. Вхід
+          суворо заборонено{" "}
+          <span className="text-red-400 font-bold border border-red-500/30 px-1">
+            Роману
+          </span>{" "}
+          та дамам більше{" "}
           <span className="text-red-400 font-bold border border-red-500/30 px-1">
             70 кг
           </span>

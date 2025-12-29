@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
     github: "https://github.com/ileegant",
   },
   links: {
-    donate: "https://send.monobank.ua/jar/3Koj5bwvda",
+    donate: "https://send.monobank.ua/jar/63mt83E1dg",
   },
 };
 

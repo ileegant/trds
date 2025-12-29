@@ -1,5 +1,5 @@
 import { SITE_CONFIG } from "@/lib/constants";
-
+import { Fish } from "lucide-react";
 interface CatSupportModalProps {
   isOpen?: boolean;
 }
@@ -33,11 +33,12 @@ export const CatSupportModal = ({ isOpen = true }: CatSupportModalProps) => {
             href={SITE_CONFIG?.links?.donate || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-display text-sm group flex items-center justify-center gap-3 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors border-2 border-transparent"
+            className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-2 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
           >
-            <span>НА ПАШТЕТ МУРЗІКУ</span>
+            <Fish className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
+            <span>НА РИБКУ МУРЗІКУ</span>
           </a>
-          <p className="font-display text-[10px] text-center text-neutral-600 uppercase">
+          <p className="text-[10px] text-center text-neutral-600 uppercase">
             MONOBANK БАНКА
           </p>
         </div>
