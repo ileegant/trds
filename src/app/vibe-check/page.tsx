@@ -183,10 +183,10 @@ export default function VibeCheckPage() {
     try {
       const blob = await toBlob(receiptRef.current, {
         cacheBust: true,
-        backgroundColor: "transparent",
+        backgroundColor: "black",
         skipFonts: true,
         filter: (node) => node.tagName !== "LINK",
-        style: { padding: "20px" },
+        style: { padding: "10px" },
         pixelRatio: 2,
       });
 
