@@ -4,12 +4,14 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { toBlob } from "html-to-image";
 import Barcode from "react-barcode";
 import {
-  Search,
   Share2,
   RefreshCw,
-  Fingerprint,
-  Ban,
+  AtSign,
+  Lock,
+  Frown,
   Coffee,
+  Receipt,
+  TriangleAlert,
 } from "lucide-react";
 
 // --- КОНСТАНТИ ТА ЛОГІКА (ТВОЯ БАЗА) ---
@@ -291,7 +293,7 @@ export default function VibeCheckPage() {
   // HANDLERS
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim();
-    if (!cleanNick) return showError("Введи нікнейм!");
+    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
     if (BLACKLIST.some((banned) => cleanNick.toLowerCase().includes(banned))) {
       setIsBanned(true);
@@ -372,7 +374,7 @@ export default function VibeCheckPage() {
 
       const shareData = {
         title: "Threads Vibe Check",
-        text: `Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.vercel.app/tools/vibe`,
+        text: `Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.fun/vibe-check`,
         files: [file],
       };
 
@@ -400,30 +402,115 @@ export default function VibeCheckPage() {
   // --- RENDER ---
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden font-mono">
-      {/* 1. Фонові Ефекти (Nardo Style) */}
-      <div className="fixed top-1/2 left-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-[0.06] blur-[100px] bg-slate-500 rounded-full pointer-events-none" />
-      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 pointer-events-none mix-blend-soft-light"></div>
+      {/* 🔥 ГЛОБАЛЬНИЙ БЛОК ПОМИЛКИ (ВСТАВЛЕНО ТУТ) */}
+      {errorMsg && (
+        <div className="fixed top-16 left-0 w-full px-4 z-50 animate-bounce pointer-events-auto">
+          <div className="w-full flex items-center justify-center gap-2 bg-[#ff4b4b] text-white py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-lg">
+            {/* Іконка */}
+            <TriangleAlert className="w-5 h-5 stroke-[2]" />
+
+            {/* Текст */}
+            <span className="font-mono font-bold uppercase tracking-tight text-xs md:text-sm leading-tight drop-shadow-sm text-center">
+              {errorMsg}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* 3. Контент */}
       <main className="container mx-auto px-4 py-8 max-w-2xl min-h-screen flex flex-col items-center relative z-10">
         {/* BAN SCREEN */}
         {isBanned && (
-          <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center p-6 text-center animate-bounce">
-            <h1 className="text-8xl font-black text-red-600 mb-6 font-display uppercase tracking-tighter">
-              Access Denied
+          <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center w-full h-full px-4 text-center overflow-hidden bg-neutral-950 selection:bg-red-500/30 font-sans">
+            {/* 1. ФОНОВІ ЕФЕКТИ (Шум + Глоу) */}
+            <div className="fixed top-1/2 left-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-[0.15] blur-[100px] bg-red-900 rounded-full pointer-events-none animate-pulse" />
+            <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 pointer-events-none mix-blend-soft-light"></div>
+
+            {/* 2. БЕЙДЖ ПОМИЛКИ */}
+            <div className="mb-6 animate-bounce">
+              <span className="inline-flex items-center gap-2 rounded-none border border-red-600/40 bg-red-900/10 px-4 py-1.5 text-xs font-mono text-red-500 backdrop-blur-md uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                <TriangleAlert className="w-3.5 h-3.5" />
+                <span>System Overload</span>
+              </span>
+            </div>
+
+            {/* 3. ГОЛОВНИЙ ЗАГОЛОВОК (Глітч-ефект) */}
+            <h1 className="relative font-display text-7xl md:text-9xl font-black tracking-tighter mb-4 leading-[0.85] select-none">
+              {/* Червоний шар */}
+              <span className="absolute top-0 left-0 text-red-600 mix-blend-screen blur-[2px] -translate-x-1 animate-pulse opacity-70">
+                ЙДИ
+                <br />
+                НАХУЙ
+              </span>
+
+              {/* Синій шар */}
+              <span className="absolute top-0 left-0 text-blue-600 mix-blend-screen blur-[2px] translate-x-1 animate-pulse delay-75 opacity-70">
+                ЙДИ
+                <br />
+                НАХУЙ
+              </span>
+
+              {/* Основний текст */}
+              <span className="relative text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-200 to-neutral-600 z-10">
+                ЙДИ
+                <br />
+                НАХУЙ
+              </span>
             </h1>
-            <div className="inline-flex items-center gap-2 border border-red-500/50 bg-red-500/10 px-4 py-2 text-red-400 font-mono text-sm uppercase">
-              <Ban className="w-4 h-4" />
-              <span>Detected: Rusnya / Toxic / Cringe</span>
+
+            {/* 4. ТОКСИЧНИЙ ОПИС */}
+            <h2 className="font-display mt-6 text-xl md:text-3xl font-bold text-red-500 uppercase tracking-widest bg-red-500/5 px-4 py-1">
+              ДОСТУП ЗАБЛОКОВАНО
+            </h2>
+
+            <div className="mt-6 space-y-4 max-w-lg mx-auto font-mono text-sm md:text-base leading-relaxed text-neutral-400">
+              <p>
+                Система зафіксувала критичне{" "}
+                <span className="text-white font-bold underline decoration-red-500 decoration-wavy">
+                  ПЕРЕВИЩЕННЯ ТОННАЖУ
+                </span>
+                .
+              </p>
+              <p>
+                Наш сервер не гумовий, і твоя широка кістка тут не пролізе. Вхід
+                дозволено тільки ельфійкам до{" "}
+                <span className="text-red-400 font-bold border border-red-500/30 px-1">
+                  70 кг
+                </span>
+                .
+              </p>
+              <p className="text-xs text-neutral-600 uppercase tracking-widest mt-4">
+                * Йди поприсідай, чи що *
+              </p>
+            </div>
+
+            {/* 5. КНОПКА (Neo-Brutalism стиль) */}
+            <div className="mt-12">
+              <button
+                onClick={() =>
+                  (window.location.href =
+                    "https://www.meme-arsenal.com/memes/393326927f757e07d786936ad5d1f35e.jpg")
+                }
+                className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-white text-black border-2 border-white font-display font-black uppercase tracking-wider text-lg shadow-[6px_6px_0px_0px_#dc2626] hover:bg-neutral-200 hover:shadow-[3px_3px_0px_0px_#dc2626] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+              >
+                <Frown className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                <span>Піти поплакати</span>
+              </button>
+            </div>
+
+            {/* 6. ФУТЕР */}
+            <div className="absolute bottom-6 flex items-center gap-3 text-neutral-800 text-[10px] uppercase tracking-[0.3em] font-mono">
+              <Lock className="w-3 h-3" />
+              <span>Face Control Failed</span>
+              <Lock className="w-3 h-3" />
             </div>
           </div>
         )}
 
-        {/* LOADING MODAL (Nardo Terminal Style) */}
+        {/* LOADING MODAL */}
         {loading && (
           <div className="fixed inset-0 z-[9999] bg-neutral-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6">
             <div className="w-full max-w-md bg-black border border-neutral-700 p-8 shadow-[10px_10px_0px_0px_#171717] relative">
-              {/* Кіт */}
               <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-7xl drop-shadow-2xl">
                 <img
                   src="/cat.png"
@@ -433,21 +520,21 @@ export default function VibeCheckPage() {
               </div>
 
               <div className="mt-12 space-y-6">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-neutral-500 uppercase tracking-widest">
-                    <span>Process:</span>
-                    <span className="text-emerald-500 animate-pulse">
-                      Running...
+                <div className="space-y-3 mb-8 text-left border-l-2 border-white/20 pl-4 py-1">
+                  <div className="flex justify-between text-[10px] uppercase tracking-widest text-gray-500">
+                    <span>СИСТЕМА:</span>
+                    <span className="text-white animate-pulse">
+                      ОБРОБЛЯЄ...
                     </span>
                   </div>
-                  <div className="h-1 w-full bg-neutral-800 overflow-hidden">
-                    <div className="h-full bg-slate-200 w-1/2 animate-[shimmer_1s_infinite_linear]"></div>
+                  <div className="flex justify-between text-[10px] uppercase tracking-widest text-gray-500">
+                    <span>ГОЛОД КОТА:</span>
+                    <span className="text-red-500 font-bold">
+                      КРИТИЧНИЙ (99%) ⚠️
+                    </span>
                   </div>
-                </div>
-
-                <div className="text-center">
-                  <p className="text-lg font-bold text-white uppercase tracking-wide animate-pulse">
-                    {loadingStep || "Loading..."}
+                  <p className="text-xs text-gray-300 mt-2 leading-tight">
+                    Розробник працює за їжу. Котик теж.
                   </p>
                 </div>
 
@@ -458,10 +545,10 @@ export default function VibeCheckPage() {
                   className="group flex items-center justify-center gap-3 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors border-2 border-transparent"
                 >
                   <Coffee className="w-5 h-5 group-hover:-rotate-12 transition-transform" />
-                  <span>Підгодувати кота</span>
+                  <span>НА КОРМ КОТИКУ</span>
                 </a>
                 <p className="text-[10px] text-center text-neutral-600 uppercase">
-                  Secure Connection / Anti-Cringe Protocol
+                  MONOBANK БАНКА
                 </p>
               </div>
             </div>
@@ -473,25 +560,27 @@ export default function VibeCheckPage() {
           /* INPUT MODE */
           <div className="w-full flex flex-col items-center text-center animate-fade-in-up">
             <div className="mb-6 inline-flex items-center justify-center p-3 bg-neutral-900 border border-neutral-800 rounded-full">
-              <Fingerprint className="w-8 h-8 text-slate-400" />
+              <Receipt className="w-8 h-8 text-slate-400" />
             </div>
 
-            <h1 className="font-display text-6xl md:text-8xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
-              Vibe{" "}
+            <h1 className="font-display text-4xl md:text-8xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
+              Чек твого{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
-                Check
+                Тредсу
               </span>
             </h1>
 
             <p className="text-neutral-500 text-sm md:text-lg mb-12 max-w-md font-mono">
-              Сканер біоритмів твого Threads. Дізнайся, хто ти насправді:
-              душніла, бот чи воїн світла.
+              Аналізуємо рівень токсичності, его, душності, ниття та успішного
+              успіху.
+              <br />
+              Ваша мама каже, що ви класний, а ми скажемо правду.
             </p>
 
             <div className="w-full max-w-sm space-y-6">
               <div className="relative group">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-white transition-colors">
-                  <Search className="w-5 h-5" />
+                  <AtSign className="w-5 h-5" />
                 </div>
                 <input
                   type="text"
@@ -499,31 +588,27 @@ export default function VibeCheckPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-slate-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#64748b]"
-                  placeholder="@USERNAME"
+                  placeholder="USERNAME"
                 />
               </div>
 
               <button
                 onClick={handleGenerate}
                 disabled={loading}
-                className="w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-wider text-lg shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#64748b] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="font-display w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-wider text-sm shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#64748b] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Запустити сканер
+                Роздрукувати чек
               </button>
-
-              {errorMsg && (
-                <p className="text-red-500 font-bold text-sm uppercase animate-shake">
-                  {errorMsg}
-                </p>
-              )}
             </div>
           </div>
         ) : (
           /* RESULT MODE */
           <div className="flex flex-col items-center animate-slide-up">
             {/* Controls (Colors) */}
-            Вибери тему:
-            <div className="flex gap-4 mb-8 mt-2">
+            <div className="text-xs font-bold text-neutral-500 mb-2 uppercase tracking-widest">
+              Вибери тему:
+            </div>
+            <div className="flex gap-4 mb-8">
               {RECEIPT_COLORS.map((color) => (
                 <button
                   key={color.hex}
@@ -538,9 +623,9 @@ export default function VibeCheckPage() {
                 />
               ))}
             </div>
+
             {/* --- RECEIPT AREA --- */}
             <div className="relative w-full max-w-[380px] perspective-1000 mb-8">
-              {/* Тут реф для скріншота */}
               <div
                 ref={receiptRef}
                 className="w-full bg-transparent flex justify-center p-1"
@@ -557,21 +642,18 @@ export default function VibeCheckPage() {
                     }}
                   ></div>
 
-                  {/* ХЕДЕР ЧЕКУ: Аватарка + Текст */}
+                  {/* HEADER */}
                   <div className="text-center border-b-2 border-dashed border-black/20 pb-4 mb-4">
-                    {/* 🔥 ВІДОБРАЖЕННЯ АВАТАРКИ */}
                     {result.avatar ? (
                       <div className="w-20 h-20 mx-auto mb-3 rounded-full border-1 border-black overflow-hidden bg-white relative z-10">
-                        {/* Важливо: використовуємо звичайний img, не Next/Image, щоб html-to-image його бачив */}
                         <img
                           src={result.avatar}
                           alt="Avatar"
                           className="w-full h-full object-cover"
-                          crossOrigin="anonymous" // Додаткова страховка
+                          crossOrigin="anonymous"
                         />
                       </div>
                     ) : (
-                      // Фолбек, якщо аватарки немає (смайлик)
                       <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center text-4xl border-2 border-black rounded-full bg-white/50">
                         👤
                       </div>
@@ -592,6 +674,7 @@ export default function VibeCheckPage() {
                     </p>
                   </div>
 
+                  {/* STATS */}
                   <div className="space-y-3 mb-6 text-sm uppercase font-bold">
                     <div className="flex justify-between items-start gap-2">
                       <span>АРХЕТИП:</span>
@@ -614,6 +697,8 @@ export default function VibeCheckPage() {
                   </div>
 
                   <div className="border-b-2 border-dashed border-black/20 mb-4"></div>
+
+                  {/* DETAILS */}
                   <div className="mb-4">
                     <p className="text-xs font-bold mb-1 text-gray-700">
                       СУПЕРСИЛА:
@@ -630,6 +715,8 @@ export default function VibeCheckPage() {
                       {result.roast}
                     </p>
                   </div>
+
+                  {/* FOOTER */}
                   <div className="flex flex-col items-center justify-center space-y-2 overflow-hidden pb-2">
                     <div className="scale-y-125 opacity-90 mix-blend-multiply">
                       <Barcode
@@ -648,9 +735,10 @@ export default function VibeCheckPage() {
                       Товар поверненню не підлягає
                     </p>
                     <p className="text-[10px] text-gray-400">
-                      generated by threads-vibe-check.vercel.app
+                      generated by trds.fun
                     </p>
                   </div>
+
                   <div
                     className="absolute bottom-0 left-0 w-full h-4 -mb-2 transition-all duration-500"
                     style={{
@@ -661,6 +749,7 @@ export default function VibeCheckPage() {
                 </div>
               </div>
             </div>
+
             {/* Actions */}
             <div className="w-full max-w-[380px] grid grid-cols-2 gap-4">
               <button

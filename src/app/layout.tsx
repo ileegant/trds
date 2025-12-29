@@ -3,7 +3,7 @@ import { Unbounded, Manrope } from "next/font/google";
 import Script from "next/script"; // 1. Імпортуємо Script
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+// import { Footer } from "@/components/layout/Footer";
 import { Snow } from "@/components/ui/Snow";
 
 const unbounded = Unbounded({
@@ -102,7 +102,6 @@ export default function RootLayout({
         <main className="flex-1 flex flex-col px-4 pt-8 pb-6 bg-neutral-950">
           {children}
         </main>
-        <Footer />
       </body>
     </html>
   );
