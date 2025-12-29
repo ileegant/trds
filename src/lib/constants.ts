@@ -23,6 +23,7 @@ export const BLACKLIST = [
   "drvlska",
   "genius_26.02",
   "lilya__sst",
+  "romamakesense",
 ];
 
 export const RECEIPT_COLORS = [
