@@ -96,10 +96,10 @@ export default function VibeCheckPage() {
   };
 
   const handleGenerate = async () => {
-    const cleanNick = username.replace("@", "").trim();
+    const cleanNick = username.replace("@", "").trim().toLowerCase();
     if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
-    if (BLACKLIST.some((banned) => cleanNick.toLowerCase().includes(banned))) {
+    if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
       setIsBanned(true);
       return;
     }
@@ -126,12 +126,40 @@ export default function VibeCheckPage() {
 
       const [response] = await Promise.all([
         responsePromise,
-        new Promise((resolve) => setTimeout(resolve, 3000)), // Трохи пришвидшив для UX
+        new Promise((resolve) => setTimeout(resolve, 3000)),
       ]);
 
+      if (!response.ok) {
+        clearInterval(interval);
+        setLoading(false);
+        setLoadingStep("");
+
+        let message = "";
+
+        switch (response.status) {
+          case 404:
+            message = "Це твій уявний друг? Threads про нього не чув.";
+            break;
+          case 403:
+            message = "Ого, які ми загадкові. Профіль закритий, кіна не буде.";
+            break;
+          case 422:
+            message = "Це акаунт для сталкінгу колишніх? Де пости, алло?";
+            break;
+          case 500:
+          default:
+            message = "Щось Threads тупить. Спробуй пізніше.";
+            break;
+        }
+
+        showError(message);
+        return;
+      }
+
       const data = await response.json();
+
       const postsData = data.posts || [];
-      const avatarData = data.avatar || null;
+      const avatarData = data.user?.avatar || null;
 
       clearInterval(interval);
       setLoadingStep("Фіналізуємо чек...");
@@ -139,14 +167,13 @@ export default function VibeCheckPage() {
       const aiResult = generateVibe(cleanNick, postsData, avatarData);
       setResult(aiResult);
     } catch (error) {
-      console.warn("API Error, generating locally");
+      console.warn("Global Error (Network etc)", error);
       clearInterval(interval);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const aiResult = generateVibe(cleanNick, [], undefined);
-      setResult(aiResult);
-    } finally {
+
       setLoading(false);
-      setLoadingStep("");
+      showError("Немає з'єднання з сервером 😢");
+    } finally {
+      if (!result) setLoading(false);
     }
   };
 
@@ -208,7 +235,7 @@ export default function VibeCheckPage() {
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden font-mono">
       {/* 🔥 ГЛОБАЛЬНИЙ БЛОК ПОМИЛКИ (ВСТАВЛЕНО ТУТ) */}
       {errorMsg && (
-        <div className="fixed top-16 left-0 w-full px-4 z-50 animate-bounce pointer-events-auto">
+        <div className="fixed top-16 left-0 max-w-200 w-full px-4 z-50 animate-bounce pointer-events-auto">
           <div className="w-full flex items-center justify-center gap-2 bg-[#ff4b4b] text-white py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-lg">
             {/* Іконка */}
             <TriangleAlert className="w-5 h-5 stroke-[2]" />
@@ -367,14 +394,14 @@ export default function VibeCheckPage() {
               <Receipt className="w-8 h-8 text-slate-400" />
             </div>
 
-            <h1 className="font-display text-4xl md:text-8xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
+            <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
               Чек твого{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
                 Тредсу
               </span>
             </h1>
 
-            <p className="text-neutral-500 text-sm md:text-lg mb-12 max-w-md font-mono">
+            <p className="text-neutral-500 text-sm mb-12 max-w-md font-mono">
               Аналізуємо рівень токсичності, его, душності, ниття та успішного
               успіху.
               <br />
