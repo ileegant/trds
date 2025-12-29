@@ -1,4 +1,4 @@
-import { Coffee } from "lucide-react";
+import { Cat } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
 interface CatSupportModalProps {
@@ -12,11 +12,7 @@ export const CatSupportModal = ({ isOpen = true }: CatSupportModalProps) => {
     <div className="fixed inset-0 z-[9999] bg-neutral-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-md bg-black border border-neutral-700 p-8 shadow-[10px_10px_0px_0px_#171717] relative">
         <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-7xl drop-shadow-2xl">
-          <img
-            src="/cat.png"
-            alt="Cat Support"
-            className="w-32 h-32 object-contain"
-          />
+          <img src="/cat.png" alt="Cat Support" className="object-contain" />
         </div>
 
         <div className="mt-12 space-y-6">
@@ -38,12 +34,11 @@ export const CatSupportModal = ({ isOpen = true }: CatSupportModalProps) => {
             href={SITE_CONFIG?.links?.donate || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-center gap-3 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors border-2 border-transparent"
+            className="font-display text-sm group flex items-center justify-center gap-3 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors border-2 border-transparent"
           >
-            <Coffee className="w-5 h-5 group-hover:-rotate-12 transition-transform" />
-            <span>НА КОРМ КОТИКУ</span>
+            <span>НА ПАШТЕТ МУРЗІКУ</span>
           </a>
-          <p className="text-[10px] text-center text-neutral-600 uppercase">
+          <p className="font-display text-[10px] text-center text-neutral-600 uppercase">
             MONOBANK БАНКА
           </p>
         </div>

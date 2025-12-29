@@ -81,12 +81,18 @@ export default function VibeCheckPage() {
         );
         const data = await res.json();
 
-        // У них структура трохи інша: city / locality
-        const city = data.city || data.locality || "";
-        const country = data.countryName || "";
+        const specificCity = data.localityInfo?.administrative?.find(
+          (item: any) => item.adminLevel === 8 || item.order === 8
+        );
 
-        if (city && country) {
-          setUserLocation(`${city}, ${country}`);
+        // У них структура трохи інша: city / locality
+        const cityName = specificCity
+          ? specificCity.name
+          : data.city || data.locality;
+        const countryName = data.countryName || "Україна";
+
+        if (cityName) {
+          setUserLocation(`${cityName}, ${countryName}`);
         }
       } catch (e) {
         setUserLocation("Україна (Інтернет)");
@@ -136,7 +142,7 @@ export default function VibeCheckPage() {
 
       if (!response.ok) {
         clearInterval(interval);
-        setLoading(false);
+        // setLoading(false);
         setLoadingStep("");
 
         let message = "";
@@ -175,10 +181,10 @@ export default function VibeCheckPage() {
       console.warn("Global Error (Network etc)", error);
       clearInterval(interval);
 
-      setLoading(false);
+      // setLoading(false);
       showError("Немає з'єднання з сервером 😢");
     } finally {
-      if (!result) setLoading(false);
+      // if (!result) setLoading(false);
     }
   };
 
