@@ -19,6 +19,7 @@ import {
   Receipt,
   TriangleAlert,
 } from "lucide-react";
+import { CatSupportModal } from "@/components/ui/CatSupportModal";
 
 interface VibeStats {
   toxicity: number;
@@ -74,13 +75,18 @@ export default function VibeCheckPage() {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const res = await fetch("https://ipapi.co/json/");
-        if (!res.ok) throw new Error("API Limit");
+        // localityLanguage=uk змушує віддавати назви українською
+        const res = await fetch(
+          "https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=uk"
+        );
         const data = await res.json();
-        if (data.city && data.country_name) {
-          setUserLocation(`${data.city}, ${data.country_name}`);
-        } else {
-          throw new Error("No city data");
+
+        // У них структура трохи інша: city / locality
+        const city = data.city || data.locality || "";
+        const country = data.countryName || "";
+
+        if (city && country) {
+          setUserLocation(`${city}, ${country}`);
         }
       } catch (e) {
         setUserLocation("Україна (Інтернет)");
@@ -248,59 +254,10 @@ export default function VibeCheckPage() {
       )}
 
       {/* 3. Контент */}
-      <main className="container mx-auto px-4 py-8 max-w-2xl min-h-screen flex flex-col items-center relative z-10">
-        {/* BAN SCREEN */}
+      <main className="container mx-auto py-8 max-w-2xl min-h-screen flex flex-col items-center relative z-10">
         {isBanned && <BannedOverlay />}
+        {loading && <CatSupportModal />}
 
-        {/* LOADING MODAL */}
-        {loading && (
-          <div className="fixed inset-0 z-[9999] bg-neutral-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6">
-            <div className="w-full max-w-md bg-black border border-neutral-700 p-8 shadow-[10px_10px_0px_0px_#171717] relative">
-              <div className="absolute -top-16 left-1/2 -translate-x-1/2 text-7xl drop-shadow-2xl">
-                <img
-                  src="/cat.png"
-                  alt="Cat"
-                  className="w-32 h-32 object-contain"
-                />
-              </div>
-
-              <div className="mt-12 space-y-6">
-                <div className="space-y-3 mb-8 text-left border-l-2 border-white/20 pl-4 py-1">
-                  <div className="flex justify-between text-[10px] uppercase tracking-widest text-gray-500">
-                    <span>СИСТЕМА:</span>
-                    <span className="text-white animate-pulse">
-                      ОБРОБЛЯЄ...
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-[10px] uppercase tracking-widest text-gray-500">
-                    <span>ГОЛОД КОТА:</span>
-                    <span className="text-red-500 font-bold">
-                      КРИТИЧНИЙ (99%) ⚠️
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-300 mt-2 leading-tight">
-                    Розробник працює за їжу. Котик теж.
-                  </p>
-                </div>
-
-                <a
-                  href={SITE_CONFIG.links.donate}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-3 w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors border-2 border-transparent"
-                >
-                  <Coffee className="w-5 h-5 group-hover:-rotate-12 transition-transform" />
-                  <span>НА КОРМ КОТИКУ</span>
-                </a>
-                <p className="text-[10px] text-center text-neutral-600 uppercase">
-                  MONOBANK БАНКА
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* --- MAIN UI --- */}
         {!result ? (
           /* INPUT MODE */
           <div className="w-full flex flex-col items-center text-center animate-fade-in-up">
@@ -330,7 +287,7 @@ export default function VibeCheckPage() {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value.toLowerCase())}
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-slate-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#64748b]"
                   placeholder="USERNAME"
@@ -376,7 +333,7 @@ export default function VibeCheckPage() {
                 className="w-full bg-transparent flex justify-center p-1"
               >
                 <div
-                  className="w-full p-6 shadow-2xl relative text-black transition-colors duration-500 ease-in-out"
+                  className="w-full px-4 py-4 shadow-2xl relative text-black transition-colors duration-500 ease-in-out"
                   style={{ backgroundColor: receiptBg }}
                 >
                   <div
@@ -388,7 +345,7 @@ export default function VibeCheckPage() {
                   ></div>
 
                   {/* HEADER */}
-                  <div className="text-center border-b-2 border-dashed border-black/20 pb-4 mb-4">
+                  <div className="text-center border-b-2 border-dashed border-black/20 pb-2 mb-2">
                     {result.avatar ? (
                       <div className="w-20 h-20 mx-auto mb-3 rounded-full border-1 border-black overflow-hidden bg-white relative z-10">
                         <img
@@ -405,7 +362,7 @@ export default function VibeCheckPage() {
                     )}
 
                     <p className="text-xs text-gray-700 mt-1 font-semibold">
-                      📍 {userLocation}
+                      {userLocation}
                     </p>
                     <p className="text-xs text-gray-700">
                       {new Date().toLocaleDateString("uk-UA")} •{" "}
@@ -420,24 +377,26 @@ export default function VibeCheckPage() {
                   </div>
 
                   {/* STATS */}
-                  <div className="space-y-3 mb-6 text-sm uppercase font-bold">
+                  <div className="space-y-3 mb-2 text-sm uppercase font-bold">
                     <div className="flex justify-between items-start gap-2">
                       <span>АРХЕТИП:</span>
                       <span className="text-right leading-tight text-[#6b21a8] break-words">
                         {result.archetype}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>ТОКСИЧНІСТЬ</span>
-                      <span>₴{result.stats.toxicity}.00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>РІВЕНЬ ЕГО</span>
-                      <span>₴{result.stats.ego}.00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>ДУШНІСТЬ</span>
-                      <span>₴{result.stats.boringness}.50</span>
+                    <div className="text-xs">
+                      <div className="flex justify-between">
+                        <span>ТОКСИЧНІСТЬ</span>
+                        <span>₴{result.stats.toxicity}.00</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>РІВЕНЬ ЕГО</span>
+                        <span>₴{result.stats.ego}.00</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>ДУШНІСТЬ</span>
+                        <span>₴{result.stats.boringness}.50</span>
+                      </div>
                     </div>
                   </div>
 
@@ -452,7 +411,7 @@ export default function VibeCheckPage() {
                       "{result.superpower}"
                     </p>
                   </div>
-                  <div className="mb-6">
+                  <div className="mb-4">
                     <p className="text-xs font-bold mb-1 text-gray-700">
                       ВЕРДИКТ:
                     </p>
@@ -462,7 +421,7 @@ export default function VibeCheckPage() {
                   </div>
 
                   {/* FOOTER */}
-                  <div className="flex flex-col items-center justify-center space-y-2 overflow-hidden pb-2">
+                  <div className="flex flex-col items-center justify-center overflow-hidden">
                     <div className="scale-y-125 opacity-90 mix-blend-multiply">
                       <Barcode
                         value={`CHECK${new Date().getFullYear()}${
@@ -476,10 +435,10 @@ export default function VibeCheckPage() {
                         lineColor="#000000"
                       />
                     </div>
-                    <p className="text-xs font-bold uppercase mt-3 text-gray-600">
+                    <p className="text-xs font-bold uppercase text-gray-600">
                       Товар поверненню не підлягає
                     </p>
-                    <p className="text-[10px] text-gray-400">
+                    <p className="text-[10px] text-gray-400 mt-3">
                       generated by {SITE_CONFIG.url}
                     </p>
                   </div>
