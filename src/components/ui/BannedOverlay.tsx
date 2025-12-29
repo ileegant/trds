@@ -55,11 +55,7 @@ export default function BannedOverlay() {
         </p>
         <p>
           Наш сервер не гумовий, тому вафлі та жирухи тут не пролізуть. Вхід
-          суворо заборонено{" "}
-          <span className="text-red-400 font-bold border border-red-500/30 px-1">
-            Роману
-          </span>{" "}
-          та дамам більше{" "}
+          суворо заборонено дамам більше{" "}
           <span className="text-red-400 font-bold border border-red-500/30 px-1">
             70 кг
           </span>
