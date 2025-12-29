@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Unbounded, Manrope } from "next/font/google";
-import Script from "next/script"; // 1. Імпортуємо Script
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
-// import { Footer } from "@/components/layout/Footer";
 import { Snow } from "@/components/ui/Snow";
+import { SITE_CONFIG } from "@/lib/constants";
 
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
@@ -19,7 +19,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trds.fun"),
+  metadataBase: new URL(SITE_CONFIG.url),
 
   title: {
     default: "TRDS | Генератор для Threads",
@@ -40,13 +40,15 @@ export const metadata: Metadata = {
     "інстаграм тредс",
   ],
 
-  authors: [{ name: "Oleh", url: "https://github.com/ileegant" }],
+  authors: [
+    { name: SITE_CONFIG.developer.name, url: SITE_CONFIG.developer.github },
+  ],
   creator: "TRDS Team",
 
   openGraph: {
     title: "TRDS | Прокачай свій Threads",
     description: "Генератор статистики та мемів для твого профілю.",
-    url: "https://trds.fun",
+    url: SITE_CONFIG.url,
     siteName: "TRDS",
     locale: "uk_UA",
     type: "website",
@@ -82,7 +84,7 @@ export default function RootLayout({
         {/* 2. Google Analytics Script */}
         <Script
           strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-B9NP4D2S3P"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
@@ -90,7 +92,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-B9NP4D2S3P');
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
           `}
         </Script>
       </head>

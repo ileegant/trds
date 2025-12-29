@@ -3,13 +3,11 @@ import { MoveLeft, Skull, Ban } from "lucide-react";
 
 export default function NotFound() {
   return (
-    // 👇 Змінив h-screen на min-h-[85vh], щоб не ламало верстку з хедером
     <div className="relative flex flex-col items-center justify-center min-h-[90vh] w-full px-4 text-center overflow-hidden bg-neutral-950 selection:bg-red-500/30">
       {/* 1. Фон (Темний вайб) */}
       <div className="fixed top-1/2 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 opacity-[0.08] blur-[80px] bg-slate-600 rounded-full pointer-events-none" />
       <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 pointer-events-none mix-blend-soft-light"></div>
 
-      {/* 2. Бейдж */}
       <div className="mb-8 animate-pulse">
         <span className="inline-flex items-center gap-2 rounded-none border border-red-500/20 bg-red-500/5 px-3 py-1 text-xs font-mono text-red-400 backdrop-blur-md uppercase tracking-widest">
           <Ban className="w-3 h-3" />
@@ -17,25 +15,20 @@ export default function NotFound() {
         </span>
       </div>
 
-      {/* 3. ЗАГОЛОВОК (Гігантський, але трохи компактніший по вертикалі) */}
       <h1 className="relative font-display text-8xl md:text-[12rem] font-black tracking-tighter mb-0 leading-[0.8] select-none select-none motion-safe:animate-pulse">
-        {/* 1. Червоний шар (зміщення вліво) */}
         <span className="absolute top-0 left-0 text-red-600 mix-blend-screen blur-[1px] -translate-x-2 opacity-80">
           404
         </span>
 
-        {/* 2. Синій/Ціан шар (зміщення вправо) */}
         <span className="absolute top-0 left-0 text-cyan-600 mix-blend-screen blur-[1px] translate-x-2 opacity-80">
           404
         </span>
 
-        {/* 3. Основний шар (Твій оригінальний градієнт) */}
         <span className="relative text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-300 to-slate-700 z-10">
           404
         </span>
       </h1>
 
-      {/* 4. Текст з "перчинкою" */}
       <h2 className="font-display mt-8 text-lg md:text-2xl font-bold text-white uppercase tracking-wider max-w-2xl">
         Ну і куди ти, заліз?
       </h2>
@@ -49,7 +42,6 @@ export default function NotFound() {
         коді.
       </p>
 
-      {/* 5. КНОПКА ЕВАКУАЦІЇ */}
       <div className="mt-10">
         <Link
           href="/"
@@ -60,7 +52,6 @@ export default function NotFound() {
         </Link>
       </div>
 
-      {/* 6. Декор знизу */}
       <div className="absolute bottom-4 flex items-center gap-2 text-neutral-700 text-[10px] uppercase tracking-[0.2em] font-mono opacity-50">
         <Skull className="w-3 h-3" />
         <span>Dead End</span>

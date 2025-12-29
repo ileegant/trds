@@ -1,68 +1,68 @@
 import Link from "next/link";
-import { ArrowUpRight, Bomb, Fingerprint } from "lucide-react";
+import { ArrowUpRight, Bomb } from "lucide-react";
+import { TOOLS } from "@/lib/constants";
 
-// Масив інструментів (щоб легко додавати нові)
-const tools = [
-  // {
-  //   id: "roast",
-  //   title: "Жорстка прожарка",
-  //   description:
-  //     "AI знищить твоє его за 3 секунди. Тільки для тих, у кого сталеві нерви.",
-  //   icon: Flame,
-  //   href: "/tools/roast",
-  //   tag: "HOT",
-  //   tagColor: "bg-orange-500/10 text-orange-400 border-orange-500/20",
-  // },
-  // {
-  //   id: "stats",
-  //   title: "Глибока аналітика",
-  //   description:
-  //     "Розбір польотів: хто лайкає, хто ігнорить, і чому твої охоплення впали.",
-  //   icon: BarChart3,
-  //   href: "/tools/stats",
-  //   tag: "STABLE",
-  //   tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  // },
-  // {
-  //   id: "memes",
-  //   title: "Мем-генератор",
-  //   description:
-  //     "Перетвори свої нудні пости на мемний контент. Автоматична підстановка тексту.",
-  //   icon: Sparkles,
-  //   href: "/tools/memes",
-  //   tag: "AI V2",
-  //   tagColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  // },
-  // {
-  //   id: "ghosts",
-  //   title: "Детектор привидів",
-  //   description:
-  //     "Знайти тих, хто підписався, але ніколи не лайкає. Час для чистки.",
-  //   icon: Ghost,
-  //   href: "/tools/ghosts",
-  //   tag: null,
-  // },
-  {
-    id: "vibe",
-    title: "Vibe Check",
-    description:
-      "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
-    icon: Fingerprint,
-    href: "/vibe-check",
-    tag: "NEW",
-    tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  },
-  // {
-  //   id: "reply",
-  //   title: "Auto-Reply Bot",
-  //   description:
-  //     "Генерує дотепні відповіді хейтерам, щоб ти не витрачав свій час.",
-  //   icon: Bot,
-  //   href: "/tools/reply",
-  //   tag: "BETA",
-  //   tagColor: "bg-slate-500/10 text-slate-400 border-slate-500/20",
-  // },
-];
+// const tools = [
+// {
+//   id: "roast",
+//   title: "Жорстка прожарка",
+//   description:
+//     "AI знищить твоє его за 3 секунди. Тільки для тих, у кого сталеві нерви.",
+//   icon: Flame,
+//   href: "/tools/roast",
+//   tag: "HOT",
+//   tagColor: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+// },
+// {
+//   id: "stats",
+//   title: "Глибока аналітика",
+//   description:
+//     "Розбір польотів: хто лайкає, хто ігнорить, і чому твої охоплення впали.",
+//   icon: BarChart3,
+//   href: "/tools/stats",
+//   tag: "STABLE",
+//   tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+// },
+// {
+//   id: "memes",
+//   title: "Мем-генератор",
+//   description:
+//     "Перетвори свої нудні пости на мемний контент. Автоматична підстановка тексту.",
+//   icon: Sparkles,
+//   href: "/tools/memes",
+//   tag: "AI V2",
+//   tagColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+// },
+// {
+//   id: "ghosts",
+//   title: "Детектор привидів",
+//   description:
+//     "Знайти тих, хто підписався, але ніколи не лайкає. Час для чистки.",
+//   icon: Ghost,
+//   href: "/tools/ghosts",
+//   tag: null,
+// },
+// {
+//   id: "vibe",
+//   title: "Vibe Check",
+//   description:
+//     "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
+//   icon: Fingerprint,
+//   href: "/vibe-check",
+//   tag: "NEW",
+//   tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+// },
+// {
+//   id: "reply",
+//   title: "Auto-Reply Bot",
+//   description:
+//     "Генерує дотепні відповіді хейтерам, щоб ти не витрачав свій час.",
+//   icon: Bot,
+//   href: "/tools/reply",
+//   tag: "BETA",
+//   tagColor: "bg-slate-500/10 text-slate-400 border-slate-500/20",
+// },
+// ];
 
 export default function BrowsePage() {
   return (
@@ -72,7 +72,6 @@ export default function BrowsePage() {
       <div className="fixed bottom-0 right-0 -z-10 h-[500px] w-[500px] opacity-[0.03] blur-[120px] bg-slate-700 pointer-events-none" />
 
       <main className="container mx-auto px-4 py-20 max-w-7xl">
-        {/* 1. HEADER SECTION */}
         <div className="flex flex-col items-center text-center mb-20">
           <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
             Обери свій <br />
@@ -89,7 +88,7 @@ export default function BrowsePage() {
 
         {/* 2. GRID SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-          {tools.map((tool) => (
+          {TOOLS.map((tool) => (
             <Link
               key={tool.id}
               href={tool.href}

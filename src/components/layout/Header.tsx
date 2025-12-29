@@ -1,8 +1,7 @@
 import Link from "next/link";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export function Header() {
-  const DEVELOPER_NAME = "ileegant";
-
   return (
     <header className="fixed top-0 left-0 w-full h-12 bg-[#0a0a0a] text-white flex items-center justify-between px-4 md:px-6 z-50 shadow-md select-none border-b border-white/5">
       <Link
@@ -18,12 +17,12 @@ export function Header() {
       </Link>
 
       <a
-        href={`https://www.threads.net/@${DEVELOPER_NAME}`}
+        href={`https://www.threads.net/@${SITE_CONFIG.developer.handle}`}
         target="_blank"
         rel="noopener noreferrer"
         className="font-display text-[10px] opacity-70 whitespace-nowrap font-mono text-gray-400 hover:text-white hover:opacity-100 transition-all cursor-pointer underline decoration-transparent hover:decoration-white underline-offset-2"
       >
-        powered by {DEVELOPER_NAME}
+        powered by {SITE_CONFIG.developer.handle}
       </a>
     </header>
   );
