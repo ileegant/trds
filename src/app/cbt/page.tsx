@@ -466,7 +466,13 @@ export default function VibeCheckPage() {
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
-    const WHITELIST = ["ileegant", "iyukkuri_", "trds.fun", "yprkt24"];
+    const WHITELIST = [
+      "ileegant",
+      "iyukkuri_",
+      "trds.fun",
+      "yprkt24",
+      "romanmakesense",
+    ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
