@@ -483,6 +483,7 @@ export default function VibeCheckPage() {
       "anastasiia.shv",
       "_stepanyuchka_",
       "cloutdevitto",
+      "i.llsk8",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
