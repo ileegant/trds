@@ -480,6 +480,7 @@ export default function VibeCheckPage() {
       "olhaharding",
       "pierwszy.rr",
       "kkirsanovska",
+      "anastasiia.shv",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
