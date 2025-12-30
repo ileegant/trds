@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Lock, Cat, Send, CheckCircle2 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export const WhiteListOverlay = () => {
   const [nickname, setNickname] = useState("");
@@ -76,7 +77,7 @@ export const WhiteListOverlay = () => {
 
             {/* Кнопка донату */}
             <a
-              href="https://send.monobank.ua/jar/ТВОЯ_БАНКА" // <-- ЛІНК
+              href={SITE_CONFIG.links.donate} // <-- ЛІНК
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center gap-2 w-full bg-white text-black font-black uppercase py-3 px-4 rounded-xl mb-6 hover:bg-red-500 hover:text-white transition-all active:scale-95 shadow-lg shadow-white/10"
