@@ -42,12 +42,12 @@ export const WhiteListOverlay = () => {
             </h2>
 
             <div className="bg-red-900/20 border border-red-900/30 rounded-lg p-3 mb-6 text-center">
-              <p className="text-[8px] text-red-400 font-mono uppercase tracking-widest font-bold">
+              <p className="text-[10px] text-red-400 font-mono uppercase tracking-widest font-bold">
                 Access Denied: You are not whitelisted
               </p>
             </div>
 
-            <p className="text-neutral-400 text-center text-[8px] mb-6 font-mono leading-relaxed">
+            <p className="text-neutral-400 text-center text-[10px] mb-6 font-mono leading-relaxed">
               Зараз доступ відкрито тільки для перевірених тредчан, щоб сервери
               не лягли від напливу. Скоро відкриємо для всіх смертних. <br />
               Не хочеш чекати загальної черги?
@@ -56,7 +56,7 @@ export const WhiteListOverlay = () => {
               </span>
             </p>
 
-            <div className="space-y-2 mb-4 text-[8px] text-neutral-400 font-mono border-l-2 border-neutral-700 pl-3">
+            <div className="space-y-2 mb-4 text-[10px] text-neutral-400 font-mono border-l-2 border-neutral-700 pl-3">
               <p>
                 <span className="text-white font-bold">1.</span> Кидаєш донат на
                 корм коту (це хабар).
@@ -122,7 +122,7 @@ export const WhiteListOverlay = () => {
             <h3 className="font-black text-white mb-2 uppercase">
               Заявка пішла
             </h3>
-            <p className="text-neutral-400 text-[8px] font-mono mb-6 leading-relaxed">
+            <p className="text-neutral-400 text-[10px] font-mono mb-6 leading-relaxed">
               Якщо ти не збрехав і дійсно закинув на корм — скоро пущу. <br />
               Якщо ні — сиди і чекай до другого пришестя.
             </p>
