@@ -485,6 +485,7 @@ export default function VibeCheckPage() {
       "cloutdevitto",
       "i.llsk8",
       "pavlo.kozeletskyi",
+      "teawithmillk",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
