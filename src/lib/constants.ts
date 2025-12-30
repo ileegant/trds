@@ -1,4 +1,4 @@
-import { Fingerprint } from "lucide-react";
+import { Fingerprint, Receipt } from "lucide-react";
 
 export const SITE_CONFIG = {
   name: "TRDS",
@@ -35,13 +35,23 @@ export const RECEIPT_COLORS = [
 
 export const TOOLS = [
   {
-    id: "vibe",
-    title: "Чек Тредсу",
+    id: "cbt",
+    title: "СБТ: Служба безпеки тредів",
     description:
-      "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
+      "Дізнайся, чому тебе насправді не лайкають. Спойлер: справа не в тіньовому бані, а в тому, що ти душніла.",
     icon: Fingerprint,
-    href: "/vibe-check",
+    href: "/cbt",
     tag: "NEW",
     tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  },
+  {
+    id: "vibe",
+    title: "Твій Вайб Чек",
+    description:
+      "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
+    icon: Receipt,
+    href: "/vibe-check",
+    tag: "STABLE",
+    tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   },
 ];
