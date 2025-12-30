@@ -260,7 +260,7 @@ export default function VibeCheckPage() {
               </span>
             </h1>
 
-            <p className="text-neutral-500 text-sm mb-12 max-w-md font-mono">
+            <p className="text-neutral-400 text-xs md:text-sm mb-10 max-w-lg font-mono uppercase tracking-wider leading-relaxed">
               Аналізуємо рівень токсичності, его, душності, ниття та успішного
               успіху.
               <br />
@@ -278,13 +278,13 @@ export default function VibeCheckPage() {
                   onChange={(e) => setUsername(e.target.value.toLowerCase())}
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-slate-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#64748b]"
-                  placeholder="USERNAME"
+                  placeholder="НІКНЕЙМ"
                 />
               </div>
 
               <button
                 onClick={handleGenerate}
-                disabled={loading}
+                disabled={loading || !username.trim()}
                 className="font-display w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-wider text-sm shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#64748b] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Роздрукувати чек
