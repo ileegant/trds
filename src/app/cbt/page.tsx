@@ -479,6 +479,7 @@ export default function VibeCheckPage() {
       "pepsasasp",
       "olhaharding",
       "pierwszy.rr",
+      "kkirsanovska",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
