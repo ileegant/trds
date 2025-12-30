@@ -472,6 +472,8 @@ export default function VibeCheckPage() {
       "trds.fun",
       "yprkt24",
       "romamakesense",
+      "yevheniia25s",
+      "igor_i_gory",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
