@@ -476,6 +476,7 @@ export default function VibeCheckPage() {
       "igor_i_gory",
       "sydor_enko01",
       "did.ihor",
+      "pepsasasp",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
