@@ -482,6 +482,7 @@ export default function VibeCheckPage() {
       "kkirsanovska",
       "anastasiia.shv",
       "_stepanyuchka_",
+      "cloutdevitto",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
