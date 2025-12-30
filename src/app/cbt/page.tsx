@@ -487,6 +487,8 @@ export default function VibeCheckPage() {
       "pavlo.kozeletskyi",
       "teawithmillk",
       "moralfaq_",
+      "ffghisjkzkl",
+      "rostikarts",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
