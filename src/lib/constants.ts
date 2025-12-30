@@ -1,4 +1,4 @@
-import { Fingerprint, Receipt } from "lucide-react";
+import { Fingerprint, Receipt, Users } from "lucide-react";
 
 export const SITE_CONFIG = {
   name: "TRDS",
@@ -34,6 +34,15 @@ export const RECEIPT_COLORS = [
 ];
 
 export const TOOLS = [
+  {
+    id: "threads-circle",
+    title: "Твоє тредс коло",
+    description: "Цей тест покаже хто твої ментально не здорові кєнти.",
+    icon: Users,
+    href: "/threads-circle",
+    tag: "NEW",
+    tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  },
   {
     id: "cbt",
     title: "СБТ: Служба безпеки тредів",
