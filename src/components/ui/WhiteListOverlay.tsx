@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lock, Cat, Send, CheckCircle2, Ban } from "lucide-react";
+import { Lock, Cat, Send, CheckCircle2 } from "lucide-react";
 
 export const WhiteListOverlay = () => {
   const [nickname, setNickname] = useState("");
