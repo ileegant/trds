@@ -257,7 +257,7 @@ export default function VibeCheckPage() {
       {loading && <CatSupportModal />}
       {isBanned && <BannedOverlay />}
 
-      <main className="container mx-auto py-8 max-w-4xl min-h-screen flex flex-col items-center justify-center relative z-10 px-4">
+      <main className="container mx-auto py-8 max-w-4xl min-h-screen flex flex-col items-center justify-center relative z-10">
         {!result ? (
           /* ================= SEARCH MODE (СБУ STYLE) ================= */
           <div className="w-full flex flex-col items-center text-center animate-fade-in-up">
@@ -350,13 +350,18 @@ export default function VibeCheckPage() {
                       </h2>
                     </div>
                   </div>
-                  <div className="font-mono text-[8px] text-neutral-400 text-right uppercase">
-                    <p>Дата: {new Date().toLocaleDateString()}</p>
-                    <p>Локація: {result.stats.location}</p>
+                  <div className="font-mono text-[8px] md:text-[10px] text-neutral-400 text-right uppercase flex flex-row md:flex-col justify-end items-center md:items-end gap-2 md:gap-0">
+                    <p className="whitespace-nowrap">
+                      Дата: {new Date().toLocaleDateString()}
+                    </p>
+
+                    <p className="whitespace-nowrap truncate max-w-[150px] md:max-w-none">
+                      Локація: {result.stats.location}
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-2 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div className="p-2 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                   {/* --- ЛІВА КОЛОНКА (Аватар + Інфо) --- */}
                   {/* Мобільний: flex-row (в рядок), Десктоп: flex-col (в стовпчик) */}
                   <div className="md:col-span-1 flex flex-row md:flex-col gap-4 md:gap-6 items-start md:items-stretch">
@@ -401,7 +406,7 @@ export default function VibeCheckPage() {
                           Фігурант
                         </p>
                         <div className="relative">
-                          <p className="text-white md:text-lg font-bold bg-white/5 px-2 py-1 border-l-2 border-emerald-500 break-all leading-tight z-10 relative">
+                          <p className="text-white text-xs md:text-lg font-bold bg-white/5 px-2 py-1 border-l-2 border-emerald-500 break-all leading-tight z-10 relative">
                             @{result.nickname}
                           </p>
                         </div>
@@ -409,20 +414,20 @@ export default function VibeCheckPage() {
 
                       {/* Статус */}
                       <div>
-                        <p className="text-neutral-500 text-[10px] uppercase tracking-wider">
+                        <p className="text-neutral-500 text-[8px] uppercase tracking-wider">
                           Статус
                         </p>
-                        <p className="text-yellow-500 font-bold text-xs md:text-sm leading-tight">
+                        <p className="text-yellow-500 font-bold text-[10px] md:text-sm leading-tight">
                           {result.stats.status}
                         </p>
                       </div>
 
                       {/* Рівень загрози */}
                       <div>
-                        <p className="text-neutral-500 text-[10px] uppercase tracking-wider">
+                        <p className="text-neutral-500 text-[8px] uppercase tracking-wider">
                           Рівень загрози
                         </p>
-                        <div className="flex items-center gap-2 mt-1">
+                        <div className="flex items-center gap-2">
                           <div className="h-2 flex-1 bg-neutral-800 rounded-full overflow-hidden border border-white/5">
                             <div
                               className="h-full bg-gradient-to-r from-yellow-600 via-red-500 to-red-700 shadow-[0_0_10px_rgba(220,38,38,0.5)]"
@@ -439,10 +444,10 @@ export default function VibeCheckPage() {
 
                   {/* --- ПРАВА КОЛОНКА (Докази + Вирок) --- */}
                   {/* На телефоні йде знизу, на десктопі справа */}
-                  <div className="md:col-span-2 flex flex-col gap-6">
+                  <div className="md:col-span-2 flex flex-col gap-3">
                     {/* Список доказів */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-white/40 border-b border-white/10 pb-2">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1 text-white/40 border-b border-white/10 pb-1">
                         <Eye className="w-4 h-4" />
                         <h3 className="text-[10px] font-bold uppercase tracking-widest">
                           Матеріали (Останні пости)
@@ -451,7 +456,7 @@ export default function VibeCheckPage() {
                       {result.evidence.map((item) => (
                         <div
                           key={item.id}
-                          className="bg-neutral-950 p-2 border border-neutral-800 hover:border-neutral-700 transition-colors"
+                          className="bg-neutral-950 p-1 border border-neutral-800 hover:border-neutral-700 transition-colors"
                         >
                           <div className="flex justify-between items-start">
                             <span className="text-[8px] text-neutral-500 font-mono">
@@ -462,14 +467,14 @@ export default function VibeCheckPage() {
                           <p className="text-neutral-300 italic text-[10px] mb-1 leading-relaxed">
                             "{item.text}"
                           </p>
-                          <div className="flex items-start gap-1 pt-2 border-t border-dashed border-white/10">
+                          {/* <div className="flex items-start gap-1 pt-1 border-t border-dashed border-white/10">
                             <span className="text-red-500/70 text-[10px]">
                               ➤
                             </span>
                             <p className="text-red-400/80 text-[10px] font-mono uppercase">
                               ПРИМІТКА: {item.note}
                             </p>
-                          </div>
+                          </div> */}
                         </div>
                       ))}
                     </div>
@@ -493,12 +498,12 @@ export default function VibeCheckPage() {
                 </div>
 
                 {/* Dossier Footer */}
-                <div className="bg-neutral-950/50 p-3 border-t border-white/10 flex justify-between items-center">
-                  <p className="text-[10px] text-neutral-600 font-mono">
+                <div className="bg-neutral-950/50 p-1 border-t border-white/10 flex justify-between items-center">
+                  <p className="text-[8px] text-neutral-600 font-mono">
                     АВТОМАТИЧНА ГЕНЕРАЦІЯ. TRDS.FUN
                   </p>
-                  <div className="text-[10px] text-neutral-600 font-mono">
-                    СЛІДЧИЙ: Ш.І. (V1.0)
+                  <div className="text-[8px] text-neutral-600 font-mono">
+                    СЛІДЧИЙ: ileegant
                   </div>
                 </div>
               </div>
