@@ -478,6 +478,7 @@ export default function VibeCheckPage() {
       "did.ihor",
       "pepsasasp",
       "olhaharding",
+      "pierwszy.rr",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
