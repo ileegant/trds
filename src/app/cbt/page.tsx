@@ -533,7 +533,7 @@ export default function VibeCheckPage() {
       });
       const shareData = {
         title: "Справа Тредчан",
-        text: `Моє досьє в базі Тредчана 📂🕵️\nПеревір себе: https://trds.fun/vibe-check`,
+        text: `Моє досьє в базі Тредчана 📂🕵️\nПеревір себе: https://trds.fun/cbt`,
         files: [file],
       };
 
