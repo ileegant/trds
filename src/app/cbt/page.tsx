@@ -489,6 +489,7 @@ export default function VibeCheckPage() {
       "moralfaq_",
       "ffghisjkzkl",
       "rostikarts",
+      "chopers.wear",
     ];
     if (!cleanNick) return showError("Введіть позивний об'єкта!");
 
