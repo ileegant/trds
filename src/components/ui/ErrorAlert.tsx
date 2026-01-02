@@ -1,11 +1,10 @@
 import { TriangleAlert } from 'lucide-react';
 
 interface ErrorAlertProps {
-  message: string | null; // Приймає рядок або null
+  message: string | null;
 }
 
 export const ErrorAlert = ({ message }: ErrorAlertProps) => {
-  // Якщо повідомлення немає, не показуємо нічого
   if (!message) return null;
 
   return (
