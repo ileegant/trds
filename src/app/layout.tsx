@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { Unbounded, Manrope } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
+
+// Components
 import { Header } from "@/components/layout/Header";
 import { Snow } from "@/components/ui/Snow";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+
+// Config
 import { SITE_CONFIG } from "@/lib/constants";
 
+// Fonts setup
 const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
   variable: "--font-unbounded",
@@ -18,17 +23,15 @@ const manrope = Manrope({
   display: "swap",
 });
 
+// Metadata setup
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
-
   title: {
     default: "TRDS | Генератор для Threads",
     template: "%s | TRDS",
   },
-
   description:
     "Безкоштовний набір інструментів для Threads: генератор мемів, детальна статистика профілю, аналіз трендів та створення вірусного контенту.",
-
   keywords: [
     "Threads",
     "Тредс",
@@ -39,12 +42,10 @@ export const metadata: Metadata = {
     "trds",
     "інстаграм тредс",
   ],
-
   authors: [
     { name: SITE_CONFIG.developer.name, url: SITE_CONFIG.developer.github },
   ],
   creator: "TRDS Team",
-
   openGraph: {
     title: "TRDS | Прокачай свій Threads",
     description: "Генератор статистики та мемів для твого профілю.",
@@ -53,13 +54,11 @@ export const metadata: Metadata = {
     locale: "uk_UA",
     type: "website",
   },
-
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-
   robots: {
     index: true,
     follow: true,
@@ -78,29 +77,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bodyClasses = [
+    manrope.variable,
+    unbounded.variable,
+    "antialiased min-h-screen flex flex-col bg-neutral-950 text-white"
+  ].join(" ");
+
   return (
     <html lang="uk">
-      <head>
-        {/* 2. Google Analytics Script */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-          `}
-        </Script>
-      </head>
       <body
-        className={`${manrope.variable} ${unbounded.variable} antialiased min-h-screen flex flex-col bg-neutral-950 text-white`}
+        className={bodyClasses}
       >
+        {/* Analytics */}
+        <GoogleAnalytics />
+
+        {/* UI elements */}
         <Snow />
         <Header />
+
         <main className="flex-1 flex flex-col px-4 pt-8 pb-6 bg-neutral-950">
           {children}
         </main>
