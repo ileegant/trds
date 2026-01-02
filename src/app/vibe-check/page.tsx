@@ -12,7 +12,6 @@ import {
   AtSign,
   Coffee,
   Receipt,
-  TriangleAlert,
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";

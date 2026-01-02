@@ -11,7 +11,6 @@ import {
   AtSign,
   Coffee,
   Siren,
-  TriangleAlert,
   Fingerprint,
   FileWarning,
   Eye,
@@ -19,6 +18,7 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { WhiteListOverlay } from "@/components/ui/WhiteListOverlay";
+import { ErrorAlert } from "@/components/ui/ErrorAlert";
 
 interface VibeStats {
   threatLevel: string; // Замість toxicity

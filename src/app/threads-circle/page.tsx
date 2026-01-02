@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AtSign, TriangleAlert, Users } from "lucide-react";
+import { AtSign, Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator"; // Ваш компонент з попереднього кроку
 import { CatSupportModal } from "@/components/ui/CatSupportModal"; // Припускаю, що це у вас є
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
