@@ -25,6 +25,32 @@ export const BLACKLIST = [
   "lilya__sst",
 ];
 
+export const WHITELIST = [
+  "ileegant",
+  "iyukkuri_",
+  "trds.fun",
+  "yprkt24",
+  "romamakesense",
+  "yevheniia25s",
+  "igor_i_gory",
+  "sydor_enko01",
+  "did.ihor",
+  "pepsasasp",
+  "olhaharding",
+  "pierwszy.rr",
+  "kkirsanovska",
+  "anastasiia.shv",
+  "_stepanyuchka_",
+  "cloutdevitto",
+  "i.llsk8",
+  "pavlo.kozeletskyi",
+  "teawithmillk",
+  "moralfaq_",
+  "ffghisjkzkl",
+  "rostikarts",
+  "chopers.wear",
+];
+
 export const RECEIPT_COLORS = [
   { hex: "#ffffff", name: "Classic White" },
   { hex: "#F4FF5F", name: "Acid Yellow" },
