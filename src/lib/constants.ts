@@ -33,6 +33,14 @@ export const RECEIPT_COLORS = [
   { hex: "#C7F9CC", name: "Mint Fresh" },
 ];
 
+export const TAG_STYLES: Record<string, string> = {
+  HOT: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  STABLE: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  AI: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  NEW: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  BETA: "bg-slate-500/10 text-slate-400 border-slate-500/20",
+};
+
 export const TOOLS = [
   {
     id: "threads-circle",
@@ -41,7 +49,6 @@ export const TOOLS = [
     icon: Users,
     href: "/threads-circle",
     tag: "NEW",
-    tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   },
   {
     id: "cbt",
@@ -51,7 +58,6 @@ export const TOOLS = [
     icon: Fingerprint,
     href: "/cbt",
     tag: "NEW",
-    tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   },
   {
     id: "vibe",
@@ -61,6 +67,5 @@ export const TOOLS = [
     icon: Receipt,
     href: "/vibe-check",
     tag: "STABLE",
-    tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   },
 ];
