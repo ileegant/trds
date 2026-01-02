@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AtSign, TriangleAlert, Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator"; // Ваш компонент з попереднього кроку
 import { CatSupportModal } from "@/components/ui/CatSupportModal"; // Припускаю, що це у вас є
+import { ErrorAlert } from "@/components/ui/ErrorAlert";
 
 // --- CONSTANTS ---
 // УВАГА: У реальному проєкті ці URL мають бути динамічними або йти через ваш бекенд,
@@ -156,16 +157,7 @@ export default function ThreadsCirclePage() {
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-green-500/30 overflow-x-hidden font-mono">
       {/* --- ERROR TOAST --- */}
-      {errorMsg && (
-        <div className="fixed top-16 left-0 w-full flex justify-center px-4 z-50 pointer-events-none">
-          <div className="animate-bounce bg-[#ff4b4b] text-white px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-lg flex items-center gap-3 pointer-events-auto">
-            <TriangleAlert className="w-5 h-5 stroke-[3]" />
-            <span className="font-bold uppercase text-xs md:text-sm">
-              {errorMsg}
-            </span>
-          </div>
-        </div>
-      )}
+      {errorMsg && <ErrorAlert message={errorMsg} />}
 
       {/* --- LOADING MODAL --- */}
       {loading && <CatSupportModal />}

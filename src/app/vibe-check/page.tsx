@@ -15,6 +15,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
+import { ErrorAlert } from "@/components/ui/ErrorAlert";
 
 interface VibeStats {
   toxicity: number;
@@ -227,19 +228,7 @@ export default function VibeCheckPage() {
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden font-mono">
       {/* 🔥 ГЛОБАЛЬНИЙ БЛОК ПОМИЛКИ (ВСТАВЛЕНО ТУТ) */}
-      {errorMsg && (
-        <div className="fixed top-16 left-0 max-w-200 w-full px-4 z-50 animate-bounce pointer-events-auto">
-          <div className="w-full flex items-center justify-center gap-2 bg-[#ff4b4b] text-white py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-lg">
-            {/* Іконка */}
-            <TriangleAlert className="w-5 h-5 stroke-[2]" />
-
-            {/* Текст */}
-            <span className="font-mono font-bold uppercase tracking-tight text-xs md:text-sm leading-tight drop-shadow-sm text-center">
-              {errorMsg}
-            </span>
-          </div>
-        </div>
-      )}
+      {errorMsg && <ErrorAlert message={errorMsg} />}
 
       {/* 3. Контент */}
       <main className="container mx-auto py-8 max-w-2xl min-h-screen flex flex-col items-center relative z-10">

@@ -596,14 +596,7 @@ export default function VibeCheckPage() {
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-red-900/30 overflow-x-hidden font-mono flex flex-col items-center">
       {/* Глобальна помилка */}
-      {errorMsg && (
-        <div className="fixed top-8 z-50 animate-bounce">
-          <div className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]">
-            <TriangleAlert className="w-5 h-5" />
-            <span className="font-bold uppercase text-xs">{errorMsg}</span>
-          </div>
-        </div>
-      )}
+      {errorMsg && <ErrorAlert message={errorMsg} />}
 
       <main className="container mx-auto py-8 max-w-4xl min-h-screen flex flex-col items-center relative z-10">
         {loading && <CatSupportModal />}
