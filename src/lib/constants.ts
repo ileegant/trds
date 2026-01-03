@@ -73,7 +73,7 @@ export const TOOLS = [
     title: "Твоє тредс коло",
     description: "Цей тест покаже хто твої ментально не здорові кєнти.",
     icon: Users,
-    href: "/threads-circle",
+    href: "tools/threads-circle",
     tag: "NEW",
   },
   {
@@ -82,7 +82,7 @@ export const TOOLS = [
     description:
       "Дізнайся, чому тебе насправді не лайкають. Спойлер: справа не в тіньовому бані, а в тому, що ти душніла.",
     icon: Fingerprint,
-    href: "/cbt",
+    href: "tools/cbt",
     tag: "NEW",
   },
   {
@@ -91,7 +91,7 @@ export const TOOLS = [
     description:
       "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
     icon: Receipt,
-    href: "/vibe-check",
+    href: "tools/vibe-check",
     tag: "STABLE",
   },
 ];
