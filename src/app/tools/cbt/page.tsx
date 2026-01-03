@@ -1,6 +1,6 @@
 "use client";
 
-import { SITE_CONFIG, BLACKLIST, WHITELIST } from "@/lib/constants";
+import { SITE_CONFIG, BLACKLIST } from "@/lib/constants";
 import { SUPERPOWERS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef, useCallback, useEffect } from "react";
@@ -17,9 +17,10 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
-import { WhiteListOverlay } from "@/components/ui/WhiteListOverlay";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { threats, statuses, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
+import { log } from "console";
+import { cleanThreadsPost } from "@/lib/cleaners";
 
 interface VibeStats {
   threatLevel: string; // Замість toxicity
@@ -95,14 +96,13 @@ const generateVibe = (
   };
 };
 
-export default function VibeCheckPage() {
+export default function CBTPage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VibeResult | null>(null);
   const [userLocation, setUserLocation] = useState("Локація визначається...");
   const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-  const [isWhitelisted, setIsWhitelisted] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -146,11 +146,6 @@ export default function VibeCheckPage() {
       return;
     }
 
-    if (!WHITELIST.includes(cleanNick)) {
-      setIsWhitelisted(false);
-      return;
-    }
-
     setLoading(true);
     setResult(null);
 
@@ -170,10 +165,18 @@ export default function VibeCheckPage() {
         return showError("Помилка з'єднання з архівом.");
       }
 
+
       const data = await response.json();
+      console.log(data);
+      console.log(cleanNick);
+      console.log(cleanThreadsPost(data.posts) || []);
+      console.log(data.user?.avatar || null);
+      console.log(userLocation);
+
+      
       const aiResult = generateVibe(
         cleanNick,
-        data.posts || [],
+        cleanThreadsPost(data.posts) || [],
         data.user?.avatar || null,
         userLocation
       );
@@ -249,7 +252,6 @@ export default function VibeCheckPage() {
       <main className="container mx-auto py-8 max-w-4xl min-h-screen flex flex-col items-center relative z-10">
         {loading && <CatSupportModal />}
         {isBanned && <BannedOverlay />}
-        {!isWhitelisted && <WhiteListOverlay />}
 
         {!result ? (
           /* ================= SEARCH MODE (СБУ STYLE) ================= */
