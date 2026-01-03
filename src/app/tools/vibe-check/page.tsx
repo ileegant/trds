@@ -103,6 +103,7 @@ export default function VibeCheckPage() {
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
+    
     if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
