@@ -39,8 +39,8 @@ export default function ThreadsCirclePage() {
 
   // --- MAIN HANDLER ---
   const handleGenerate = async () => {
-    const cleanNick = username.replace("@", "").trim();
-    
+    const cleanNick = username.replace("@", "").trim().toLowerCase();
+
     if (!cleanNick) {
       return showError("Введи нікнейм, екстрасенси у відпустці.");
     }
