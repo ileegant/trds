@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
+import { processThreadsContext } from "@/lib/threads-processor";
 
 interface VibeStats {
   toxicity: number;
@@ -103,7 +104,7 @@ export default function VibeCheckPage() {
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
-    
+
     if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
