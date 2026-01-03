@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { processThreadsContext } from "@/lib/threads-processor";
 
 interface VibeStats {
   toxicity: number;
