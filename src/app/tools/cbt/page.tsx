@@ -18,8 +18,7 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { threats, statuses, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
-import { log } from "console";
+import { THREATS, CBT_STATUSES, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
 
 interface VibeStats {
@@ -76,9 +75,9 @@ const generateVibe = (
     });
   }
 
-  const threatScores = Object.keys(threats).map(Number); // [5, 20, 40, 60, 80, 95, 100]
+  const threatScores = Object.keys(THREATS).map(Number); // [5, 20, 40, 60, 80, 95, 100]
   const score = threatScores[seed % threatScores.length]; // Беремо конкретне число зі списку
-  const label = threats[score as keyof typeof threats]; // Беремо відповідний текст
+  const label = THREATS[score as keyof typeof THREATS]; // Беремо відповідний текст
 
   return {
     nickname: username,
@@ -87,7 +86,7 @@ const generateVibe = (
     stats: {
       threatLevel: label,
       threatScore: score,
-      status: statuses[seed % statuses.length],
+      status: CBT_STATUSES[seed % CBT_STATUSES.length],
       location: location || "Невідома локація",
     },
     roast: postRoasts[seed % postRoasts.length], // Вирок
@@ -173,7 +172,7 @@ export default function CBTPage() {
       console.log(data.user?.avatar || null);
       console.log(userLocation);
 
-      
+
       const aiResult = generateVibe(
         cleanNick,
         cleanThreadsPost(data.posts) || [],
@@ -447,14 +446,6 @@ export default function CBTPage() {
                           <p className="text-neutral-300 italic text-[10px] mb-1 leading-relaxed">
                             "{item.text}"
                           </p>
-                          {/* <div className="flex items-start gap-1 pt-1 border-t border-dashed border-white/10">
-                            <span className="text-red-500/70 text-[10px]">
-                              ➤
-                            </span>
-                            <p className="text-red-400/80 text-[10px] font-mono uppercase">
-                              ПРИМІТКА: {item.note}
-                            </p>
-                          </div> */}
                         </div>
                       ))}
                     </div>
