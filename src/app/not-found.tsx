@@ -4,10 +4,6 @@ import { MoveLeft, Skull, Ban } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-[90vh] w-full px-4 text-center overflow-hidden bg-neutral-950 selection:bg-red-500/30">
-      {/* 1. Фон (Темний вайб) */}
-      <div className="fixed top-1/2 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 opacity-[0.08] blur-[80px] bg-slate-600 rounded-full pointer-events-none" />
-      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 pointer-events-none mix-blend-soft-light"></div>
-
       <div className="mb-8 animate-pulse">
         <span className="inline-flex items-center gap-2 rounded-none border border-red-500/20 bg-red-500/5 px-3 py-1 text-xs font-mono text-red-400 backdrop-blur-md uppercase tracking-widest">
           <Ban className="w-3 h-3" />
