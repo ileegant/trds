@@ -8,14 +8,12 @@ import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { processThreadsContext } from "@/lib/threads-processor";
 import { BLACKLIST, WHITELIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
-import { WhiteListOverlay } from "@/components/ui/WhiteListOverlay";
 
 export default function ThreadsCirclePage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-  const [isInWhitelist, setIsInWhitelist] = useState(true);
 
   // Data State
   const [owner, setOwner] = useState<any>(null);
@@ -47,11 +45,6 @@ export default function ThreadsCirclePage() {
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
       setIsBanned(true);
-      return;
-    }
-
-    if (!WHITELIST.some((whitelist) => cleanNick.includes(whitelist))) {
-      setIsInWhitelist(false);
       return;
     }
 
@@ -107,16 +100,12 @@ export default function ThreadsCirclePage() {
 
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-green-500/30 overflow-x-hidden font-mono">
-      {/* --- ERROR TOAST --- */}
       {errorMsg && <ErrorAlert message={errorMsg} />}
-
-      {/* --- LOADING MODAL (Показуємо котів, поки сервер думає і вантажить картинки) --- */}
       {loading && <CatSupportModal />}
 
       <main className="container mx-auto py-12 max-w-3xl min-h-screen flex flex-col items-center relative z-10 px-4">
         {isBanned && <BannedOverlay />}
-        {!isInWhitelist && <WhiteListOverlay />}
-        
+
         {!dataReady ? (
           /* --- INPUT MODE --- */
           <div className="w-full flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -161,23 +150,8 @@ export default function ThreadsCirclePage() {
             </div>
           </div>
         ) : (
-          /* --- RESULT MODE --- */
           <div className="w-full flex flex-col items-center animate-in fade-in duration-500">
-             
-             {/* Кнопка "Спробувати ще" */}
-             <div className="w-full flex justify-end mb-4">
-                <button 
-                  onClick={resetState}
-                  className="flex items-center gap-2 text-xs text-neutral-500 hover:text-green-400 transition-colors uppercase tracking-widest"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  Новий пошук
-                </button>
-             </div>
-
-            {/* 5. CANVAS GENERATOR */}
             <div className="w-full flex justify-center pb-20">
-              {/* Передаємо дані в генератор. Вони вже готові до вживання. */}
               {owner && (
                 <ThreadsCanvasGenerator
                   owner={owner}
