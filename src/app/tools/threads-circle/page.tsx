@@ -105,7 +105,7 @@ export default function ThreadsCirclePage() {
               <Users className="w-10 h-10 text-green-400" />
             </div>
 
-            <h1 className="font-black text-4xl md:text-7xl uppercase tracking-tighter text-white mb-6 leading-none">
+            <h1 className="font-black font-display text-4xl md:text-7xl uppercase tracking-tighter text-white mb-6 leading-none">
               Твоє Тредс{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
                 Оточення
@@ -128,7 +128,7 @@ export default function ThreadsCirclePage() {
                   onChange={(e) => setUsername(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
                   className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-700 focus:outline-none focus:border-green-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#22c55e]"
-                  placeholder="USERNAME"
+                  placeholder="НІКНЕЙМ"
                 />
               </div>
 

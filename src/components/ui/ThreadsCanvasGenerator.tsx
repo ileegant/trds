@@ -229,7 +229,7 @@ export default function ThreadsCanvasGenerator({
           className="col-span-2 group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
         >
           <Download className="w-4 h-4" />
-          <span>Поділитись PNG</span>
+          <span>Поділитись</span>
         </button>
 
         <a
