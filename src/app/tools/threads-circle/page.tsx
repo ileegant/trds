@@ -27,14 +27,6 @@ export default function ThreadsCirclePage() {
     setTimeout(() => setErrorMsg(""), 5000);
   };
 
-  const resetState = () => {
-    setDataReady(false);
-    setOwner(null);
-    setTier1([]);
-    setTier2([]);
-    setUsername("");
-  };
-
   // --- MAIN HANDLER ---
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
