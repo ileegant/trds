@@ -7,11 +7,7 @@ export default function BrowsePage() {
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden">
       <main className="container mx-auto px-4 py-20 max-w-7xl">
-        <PageHeader
-          title="Обери спосіб"
-          highlight="приниження"
-          description="Думаєш, твої треди комусь цікаві? Досить жити в ілюзіях. Обирай генератор, вводь нік і готуйся плакати. Ми розберемо твій профіль на атоми."
-        />
+        <PageHeader/>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative z-10">
           {TOOLS.map((tool) => <ToolCard key={tool.id} tool={tool}/>)}
           <SecretToolCard />

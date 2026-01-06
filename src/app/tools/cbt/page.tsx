@@ -4,7 +4,6 @@ import { SITE_CONFIG, BLACKLIST } from "@/lib/constants";
 import { SUPERPOWERS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef, useCallback, useEffect } from "react";
-import { toBlob } from "html-to-image";
 import {
   Share2,
   RefreshCw,
@@ -20,6 +19,7 @@ import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { THREATS, CBT_STATUSES, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
+import { useSmartShare } from "@/hooks/use-smart-share";
 
 interface VibeStats {
   threatLevel: string; // Замість toxicity
@@ -102,7 +102,6 @@ export default function CBTPage() {
   const [userLocation, setUserLocation] = useState("Локація визначається...");
   const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
 
   const receiptRef = useRef<HTMLDivElement>(null);
 
@@ -188,43 +187,15 @@ export default function CBTPage() {
     }
   };
 
-  const handleShare = useCallback(async () => {
-    if (!receiptRef.current || isSaving) return;
-    setIsSaving(true);
-
-    try {
-      const blob = await toBlob(receiptRef.current, {
-        cacheBust: true,
-        backgroundColor: "#0a0a0a", // Важливо для темної теми
-        style: { padding: "0px" },
-        pixelRatio: 2,
-      });
-
-      if (!blob) throw new Error("Помилка генерації");
-
-      const file = new File([blob], `dossier-${username}.png`, {
-        type: "image/png",
-      });
-      const shareData = {
-        title: "Справа Тредчан",
-        text: `Моє досьє в базі Тредчана 📂🕵️\nПеревір себе: https://trds.fun/tools/cbt`,
-        files: [file],
-      };
-
-      if (navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData);
-      } else {
-        const link = document.createElement("a");
-        link.download = `dossier-${username}.png`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-      }
-    } catch (err) {
-      showError("Не вдалося зберегти доказ.");
-    } finally {
-      setIsSaving(false);
+  const { handleShare, isSharing } = useSmartShare({
+    ref: receiptRef,
+    username: username,
+    filePrefix: "cbt",
+    shareData: {
+      title: "Досʼє ан мене.",
+      text: `Нова база Тредчана в СБТ 📂🕵️\nПеревір себе: https://trds.fun/tools/cbt`,
     }
-  }, [receiptRef, username, isSaving]);
+  })
 
   const generateCaseID = (name: string) => {
     if (!name) return "X-000";
@@ -484,16 +455,16 @@ export default function CBTPage() {
             <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 onClick={handleShare}
-                disabled={isSaving}
+                disabled={isSharing}
                 className="group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
               >
-                {isSaving ? (
+                {isSharing ? (
                   <RefreshCw className="w-5 h-5 animate-spin" />
                 ) : (
                   <Share2 className="w-5 h-5" />
                 )}
                 <span>
-                  {isSaving ? "ФОРМУЄМО СПРАВУ..." : "ЗЛИТИ В THREADS"}
+                  {isSharing ? "ФОРМУЄМО СПРАВУ..." : "ЗЛИТИ В THREADS"}
                 </span>
               </button>
 

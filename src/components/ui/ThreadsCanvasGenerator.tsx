@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Download, Palette, RefreshCcw, Coffee } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
+import { useSmartShare } from "@/hooks/use-smart-share";
 
 interface User {
   pk: string;
@@ -25,12 +26,8 @@ export default function ThreadsCanvasGenerator({
   const [bgColor, setBgColor] = useState("#d8b4fe");
   const [isDrawing, setIsDrawing] = useState(true);
 
-  // Обрізаємо зайвих
   const visualTier2 = tier2.slice(0, 14);
 
-  // --- 1. ДОПОМІЖНІ ФУНКЦІЇ ---
-
-  // Проксі для картинок
   const getProxyUrl = (url: string) =>
     `/api/proxy-image?url=${encodeURIComponent(url)}`;
 
@@ -166,18 +163,16 @@ export default function ThreadsCanvasGenerator({
     };
   }, [owner, tier1, tier2, bgColor]); // Перемальовуємо, якщо змінились дані або колір
 
-  // --- 3. ЗАВАНТАЖЕННЯ ---
-  const handleDownload = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
 
-    // Нативний метод канвасу - миттєвий
-    const dataUrl = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.download = `threads-circle-${owner.username}.png`;
-    link.href = dataUrl;
-    link.click();
-  };
+  const { handleShare, isSharing } = useSmartShare({
+    ref: canvasRef,
+    username: owner.username,
+    filePrefix: "threads-circle",
+    shareData: {
+      title: "Моє оточення в Threads саме краще",
+      text: "Заціни і ти 🧾✨\nЗробити собі: https://trds.fun/tools/threads-circle\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹"
+    }
+  })
 
   const colors = ["#1e1e1e", "#ffffff", "#fca5a5", "#86efac", "#fcd34d"];
 
@@ -229,12 +224,12 @@ export default function ThreadsCanvasGenerator({
       {/* --- КНОПКИ --- */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
         <button
-          onClick={handleDownload}
-          disabled={isDrawing}
+          onClick={handleShare}
+          disabled={isSharing}
           className="flex items-center justify-center gap-2 bg-white text-black font-bold py-3 rounded-xl hover:bg-neutral-200 transition-colors disabled:opacity-50 text-sm active:scale-95"
         >
           <Download className="w-4 h-4" />
-          <span>Зберегти PNG</span>
+          <span>Поділитись PNG</span>
         </button>
 
         <a

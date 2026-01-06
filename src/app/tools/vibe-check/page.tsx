@@ -3,8 +3,7 @@
 import { SITE_CONFIG, BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
 import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
-import { useState, useRef, useCallback, useEffect } from "react";
-import { toBlob } from "html-to-image";
+import { useState, useRef, useEffect } from "react";
 import Barcode from "react-barcode";
 import {
   Share2,
@@ -15,6 +14,7 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
+import { useSmartShare } from "@/hooks/use-smart-share";
 
 interface VibeStats {
   toxicity: number;
@@ -62,7 +62,6 @@ export default function VibeCheckPage() {
   const [userLocation, setUserLocation] = useState("Локація визначається...");
   const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [receiptBg, setReceiptBg] = useState(RECEIPT_COLORS[0].hex);
 
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -177,52 +176,15 @@ export default function VibeCheckPage() {
     setReceiptBg(RECEIPT_COLORS[0].hex);
   };
 
-  const handleShare = useCallback(async () => {
-    if (!receiptRef.current || isSaving) return;
-    setIsSaving(true);
-
-    try {
-      const blob = await toBlob(receiptRef.current, {
-        cacheBust: true,
-        backgroundColor: "black",
-        skipFonts: true,
-        filter: (node) => node.tagName !== "LINK",
-        style: { padding: "10px" },
-        pixelRatio: 2,
-      });
-
-      if (!blob) throw new Error("Не вдалося створити файл");
-
-      const file = new File([blob], `vibe-${username.replace("@", "")}.png`, {
-        type: "image/png",
-      });
-
-      const shareData = {
-        title: "Threads Vibe Check",
-        text: `Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.fun/vibe-check\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹`,
-        files: [file],
-      };
-
-      if (
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare(shareData)
-      ) {
-        await navigator.share(shareData);
-      } else {
-        const link = document.createElement("a");
-        link.download = `vibe-${username.replace("@", "")}.png`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-      }
-    } catch (err) {
-      if ((err as Error).name !== "AbortError") {
-        showError("Не вдалося поділитись 😢");
-      }
-    } finally {
-      setIsSaving(false);
+  const { handleShare, isSharing } = useSmartShare({
+    ref: receiptRef,
+    username: username,
+    filePrefix: "vibe-check",
+    shareData: {
+      title: "Threads Vibe Check",
+      text: "Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.fun/tools/vibe-check\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹"
     }
-  }, [receiptRef, username, isSaving]);
+  })
 
   // --- RENDER ---
   return (
@@ -435,16 +397,16 @@ export default function VibeCheckPage() {
             <div className="w-full max-w-[380px] grid grid-cols-2 gap-4">
               <button
                 onClick={handleShare}
-                disabled={isSaving}
+                disabled={isSharing}
                 className="col-span-2 group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
               >
-                {isSaving ? (
+                {isSharing ? (
                   <RefreshCw className="w-5 h-5 animate-spin" />
                 ) : (
                   <Share2 className="w-5 h-5" />
                 )}
                 <span>
-                  {isSaving ? "Зберігаємо..." : "Поділитись в THREADS"}
+                  {isSharing ? "Зберігаємо..." : "Поділитись в THREADS"}
                 </span>
               </button>
 
