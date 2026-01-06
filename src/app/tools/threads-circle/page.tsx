@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { AtSign, Users, RefreshCw } from "lucide-react";
+import { AtSign, Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { processThreadsContext } from "@/lib/threads-processor";
-import { BLACKLIST, WHITELIST } from "@/lib/constants";
+import { BLACKLIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 
 export default function ThreadsCirclePage() {
