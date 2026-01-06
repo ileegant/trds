@@ -3,7 +3,7 @@
 import { SITE_CONFIG, BLACKLIST } from "@/lib/constants";
 import { SUPERPOWERS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Share2,
   RefreshCw,
