@@ -211,15 +211,6 @@ export default function CBTPage() {
                 </span>
               </>
             }
-            extraDecor={
-              <div className="flex items-center justify-center gap-4 opacity-50">
-                <div className="h-[1px] w-8 bg-red-500" />
-                <span className="text-red-500 text-[10px] font-mono uppercase tracking-widest">
-                  Доступ до реєстру
-                </span>
-                <div className="h-[1px] w-8 bg-red-500" />
-              </div>
-            }
             description="Введіть позивний (нікнейм) об'єкта для перевірки по базах даних та виявлення ознак деструктивної діяльності."
             buttonText="ЗАПИТ ДО АРХІВУ"
             placeholder="ПОЗИВНИЙ"
