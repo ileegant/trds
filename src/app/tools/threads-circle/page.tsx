@@ -1,31 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { AtSign, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { processThreadsContext } from "@/lib/threads-processor";
 import { BLACKLIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
+import { useErrorMessage } from "@/hooks/useErrorMessage";
+import { SearchMode } from "@/components/tools/SearchMode";
 
 export default function ThreadsCirclePage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
 
+  const { error, showError } = useErrorMessage();
   // Data State
   const [owner, setOwner] = useState<any>(null);
   const [tier1, setTier1] = useState<any[]>([]);
   const [tier2, setTier2] = useState<any[]>([]);
   const [dataReady, setDataReady] = useState(false);
-
-  // --- HELPERS ---
-  const showError = (msg: string) => {
-    setErrorMsg(msg);
-    setTimeout(() => setErrorMsg(""), 5000);
-  };
 
   // --- MAIN HANDLER ---
   const handleGenerate = async () => {
@@ -92,55 +88,35 @@ export default function ThreadsCirclePage() {
 
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-green-500/30 overflow-x-hidden font-mono">
-      {errorMsg && <ErrorAlert message={errorMsg} />}
+      {error && <ErrorAlert message={error} />}
       {loading && <CatSupportModal />}
 
       <main className="container mx-auto py-12 max-w-3xl min-h-screen flex flex-col items-center relative z-10 px-4">
         {isBanned && <BannedOverlay />}
 
         {!dataReady ? (
-          /* --- INPUT MODE --- */
-          <div className="w-full flex flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="mb-8 inline-flex items-center justify-center p-4 bg-neutral-900 border border-neutral-800 rounded-full shadow-2xl">
-              <Users className="w-10 h-10 text-green-400" />
-            </div>
-
-            <h1 className="font-black font-display text-4xl md:text-7xl uppercase tracking-tighter text-white mb-6 leading-none">
+          <SearchMode
+          username={username}
+          setUsername={setUsername}
+          onGenerate={handleGenerate}
+          loading={loading}
+          icon={<Users className="w-full h-full" />}
+          title={
+            <>
               Твоє Тредс{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
                 Оточення
               </span>
-            </h1>
-
-            <p className="text-neutral-400 text-[10px] md:text-sm mb-12 max-w-lg font-mono uppercase tracking-wider leading-relaxed">
+            </>
+          }
+          description={
+            <>
               [SYSTEM]: Scanning social bubble protocol... <br />
               Введи нікнейм, щоб згенерувати карту взаємодій.
-            </p>
-
-            <div className="w-full max-w-md space-y-6">
-              <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-green-400 transition-colors">
-                  <AtSign className="w-5 h-5" />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
-                  className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-700 focus:outline-none focus:border-green-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#22c55e]"
-                  placeholder="НІКНЕЙМ"
-                />
-              </div>
-
-              <button
-                onClick={handleGenerate}
-                disabled={loading || !username.trim()}
-                className="w-full py-4 bg-white text-black border-2 border-white font-black uppercase tracking-widest text-sm shadow-[4px_4px_0px_0px_#22c55e] hover:bg-green-400 hover:border-green-400 hover:shadow-[2px_2px_0px_0px_black] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                <span>ЗАПУСТИТИ АНАЛІЗ</span>
-              </button>
-            </div>
-          </div>
+            </>
+          }
+          buttonText="ЗАПУСТИТИ АНАЛІЗ"
+        />
         ) : (
           <div className="w-full flex flex-col items-center animate-in fade-in duration-500">
             <div className="w-full flex justify-center pb-20">

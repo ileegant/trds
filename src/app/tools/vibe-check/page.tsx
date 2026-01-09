@@ -1,20 +1,18 @@
 "use client";
 
-import { SITE_CONFIG, BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
+import { BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
 import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Barcode from "react-barcode";
-import {
-  Share2,
-  RefreshCw,
-  AtSign,
-  Coffee,
-  Receipt,
-} from "lucide-react";
+import { Receipt } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { useSmartShare } from "@/hooks/use-smart-share";
+import { useUserLocation } from "@/hooks/useUserLocation";
+import { ActionButtons } from "@/components/tools/ActionButtons";
+import { useErrorMessage } from "@/hooks/useErrorMessage";
+import { SearchMode } from "@/components/tools/SearchMode";
 
 interface VibeStats {
   toxicity: number;
@@ -59,46 +57,12 @@ export default function VibeCheckPage() {
   const [loading, setLoading] = useState(false);
   const [_, setLoadingStep] = useState("");
   const [result, setResult] = useState<VibeResult | null>(null);
-  const [userLocation, setUserLocation] = useState("Локація визначається...");
-  const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
   const [receiptBg, setReceiptBg] = useState(RECEIPT_COLORS[0].hex);
+  const { error, showError } = useErrorMessage();
 
+  const userLocation = useUserLocation();
   const receiptRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        // localityLanguage=uk змушує віддавати назви українською
-        const res = await fetch(
-          "https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=uk"
-        );
-        const data = await res.json();
-
-        const specificCity = data.localityInfo?.administrative?.find(
-          (item: any) => item.adminLevel === 8 || item.order === 8
-        );
-
-        // У них структура трохи інша: city / locality
-        const cityName = specificCity
-          ? specificCity.name
-          : data.city || data.locality;
-        const countryName = data.countryName || "Україна";
-
-        if (cityName) {
-          setUserLocation(`${cityName}, ${countryName}`);
-        }
-      } catch (e) {
-        setUserLocation("Україна (Інтернет)");
-      }
-    };
-    fetchLocation();
-  }, []);
-
-  const showError = (msg: string) => {
-    setErrorMsg(msg);
-    setTimeout(() => setErrorMsg(""), 3000);
-  };
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
@@ -170,12 +134,6 @@ export default function VibeCheckPage() {
     }
   };
 
-  const resetApp = () => {
-    setResult(null);
-    setUsername("");
-    setReceiptBg(RECEIPT_COLORS[0].hex);
-  };
-
   const { handleShare, isSharing } = useSmartShare({
     ref: receiptRef,
     username: username,
@@ -186,62 +144,39 @@ export default function VibeCheckPage() {
     }
   })
 
-  // --- RENDER ---
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden font-mono">
-      {/* 🔥 ГЛОБАЛЬНИЙ БЛОК ПОМИЛКИ (ВСТАВЛЕНО ТУТ) */}
-      {errorMsg && <ErrorAlert message={errorMsg} />}
+      {error && <ErrorAlert message={error} />}
 
-      {/* 3. Контент */}
       <main className="container mx-auto py-8 max-w-2xl min-h-screen flex flex-col items-center relative z-10">
         {isBanned && <BannedOverlay />}
         {loading && <CatSupportModal />}
 
         {!result ? (
-          /* INPUT MODE */
-          <div className="w-full flex flex-col items-center text-center animate-fade-in-up">
-            <div className="mb-6 inline-flex items-center justify-center p-3 bg-neutral-900 border border-neutral-800 rounded-full">
-              <Receipt className="w-8 h-8 text-slate-400" />
-            </div>
-
-            <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
+          <SearchMode
+          variant="default"
+          username={username}
+          setUsername={(val) => setUsername(val.toLowerCase())}
+          onGenerate={handleGenerate}
+          loading={loading}
+          icon={<Receipt className="w-full h-full" />}
+          title={
+            <>
               Чек твого{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
                 Тредсу
               </span>
-            </h1>
-
-            <p className="text-neutral-400 text-xs md:text-sm mb-10 max-w-lg font-mono uppercase tracking-wider leading-relaxed">
-              Аналізуємо рівень токсичності, его, душності, ниття та успішного
-              успіху.
+            </>
+          }
+          description={
+            <>
+              Аналізуємо рівень токсичності, его, душності, ниття та успішного успіху.
               <br />
               Ваша мама каже, що ви класний, а ми скажемо правду.
-            </p>
-
-            <div className="w-full max-w-sm space-y-6">
-              <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-white transition-colors">
-                  <AtSign className="w-5 h-5" />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                  onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
-                  className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-slate-500 transition-all text-lg font-bold uppercase font-mono shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:shadow-[4px_4px_0px_0px_#64748b]"
-                  placeholder="НІКНЕЙМ"
-                />
-              </div>
-
-              <button
-                onClick={handleGenerate}
-                disabled={loading || !username.trim()}
-                className="font-display w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-wider text-sm shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:shadow-[2px_2px_0px_0px_#64748b] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Роздрукувати чек
-              </button>
-            </div>
-          </div>
+            </>
+          }
+          buttonText="Роздрукувати чек"
+        />
         ) : (
           /* RESULT MODE */
           <div className="flex flex-col items-center animate-slide-up">
@@ -378,7 +313,7 @@ export default function VibeCheckPage() {
                       Товар поверненню не підлягає
                     </p>
                     <p className="text-[10px] text-gray-400 mt-3">
-                      generated by trds.fun/vibe-check
+                      generated by trds.fun
                     </p>
                   </div>
 
@@ -393,41 +328,11 @@ export default function VibeCheckPage() {
               </div>
             </div>
 
-            {/* Actions */}
-            <div className="w-full max-w-[380px] grid grid-cols-2 gap-4">
-              <button
-                onClick={handleShare}
-                disabled={isSharing}
-                className="col-span-2 group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
-              >
-                {isSharing ? (
-                  <RefreshCw className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Share2 className="w-5 h-5" />
-                )}
-                <span>
-                  {isSharing ? "Зберігаємо..." : "Поділитись в THREADS"}
-                </span>
-              </button>
-
-              <a
-                href={SITE_CONFIG.links.donate}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="col-span-2 flex items-center justify-center gap-2 py-3 bg-black text-neutral-400 border border-white hover:text-white hover:border-white transition-all uppercase text-sm font-bold tracking-widest shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
-              >
-                <Coffee className="w-4 h-4" />
-                <span>На каву розрабу</span>
-              </a>
-
-              <button
-                onClick={resetApp}
-                className="col-span-2 flex items-center justify-center gap-2 py-4 bg-black text-neutral-400 hover:text-white transition-all uppercase text-xs font-bold tracking-widest"
-              >
-                <RefreshCw className="w-4 h-4" />
-                <span>Ще спроба? Ну-ну. Удачі (ні).</span>
-              </button>
-            </div>
+            {/* --- ACTION BUTTONS --- */}
+            <ActionButtons
+              handleShare={handleShare}
+              isSharing={isSharing}
+            />
           </div>
         )}
       </main>

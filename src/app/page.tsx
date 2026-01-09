@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { ArrowRight, CreditCard, BarChart3, Wand2 } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
+import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
           </span>
-          <span className="tracking-wide">v1.0 Beta</span>
+          <span className="tracking-wide">v1.3 Beta</span>
         </span>
       </div>
 
@@ -29,21 +29,15 @@ export default function Home() {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 sm:w-auto my-8">
-        <Link
-          href="/stats"
-          className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_#64748b] hover:bg-gray-200 transition-all active:translate-y-1 active:shadow-none rounded-none"
-        >
+        <Button href="/stats">
           <BarChart3 className="w-5 h-5 text-slate-800" />
           <span>Аналіз профілю</span>
-        </Link>
+        </Button>
 
-        <Link
-          href="/tools"
-          className="group relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-2 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
-        >
+        <Button variant="secondary" href="/tools">
           <Wand2 className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
           <span>Згенерувати</span>
-        </Link>
+        </Button>
       </div>
 
       <div className="flex flex-col items-center gap-6 mt-6">
@@ -90,10 +84,6 @@ export default function Home() {
           15% донатів йдуть на каву
         </p>
       </div>
-
-      {/* 👇 Фонові ефекти (Холодний туман Nardo) */}
-      <div className="fixed top-1/2 left-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 opacity-[0.06] blur-[120px] bg-slate-500 rounded-full pointer-events-none" />
-      <div className="fixed bottom-0 left-0 -z-10 h-[400px] w-full opacity-[0.05] bg-gradient-to-t from-slate-800 to-transparent pointer-events-none" />
     </div>
   );
 }

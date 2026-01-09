@@ -1,14 +1,11 @@
 "use client";
 
-import { SITE_CONFIG, BLACKLIST } from "@/lib/constants";
+import { BLACKLIST } from "@/lib/constants";
 import { SUPERPOWERS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
-  Share2,
-  RefreshCw,
   AtSign,
-  Coffee,
   Siren,
   Fingerprint,
   FileWarning,
@@ -20,6 +17,10 @@ import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { THREATS, CBT_STATUSES, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
 import { useSmartShare } from "@/hooks/use-smart-share";
+import { useUserLocation } from "@/hooks/useUserLocation";
+import { ActionButtons } from "@/components/tools/ActionButtons";
+import { useErrorMessage } from "@/hooks/useErrorMessage";
+import { SearchMode } from "@/components/tools/SearchMode";
 
 interface VibeStats {
   threatLevel: string; // Замість toxicity
@@ -99,40 +100,12 @@ export default function CBTPage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VibeResult | null>(null);
-  const [userLocation, setUserLocation] = useState("Локація визначається...");
-  const [errorMsg, setErrorMsg] = useState("");
   const [isBanned, setIsBanned] = useState(false);
-
+  
+  const { error, showError } = useErrorMessage();
+  const userLocation = useUserLocation();
   const receiptRef = useRef<HTMLDivElement>(null);
 
-  // --- ЕФЕКТИ (Локація) ---
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const res = await fetch(
-          "https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=uk"
-        );
-        const data = await res.json();
-        const specificCity = data.localityInfo?.administrative?.find(
-          (item: any) => item.adminLevel === 8 || item.order === 8
-        );
-        const cityName = specificCity
-          ? specificCity.name
-          : data.city || data.locality;
-        const countryName = data.countryName || "Україна";
-        if (cityName) setUserLocation(`${cityName}, ${countryName}`);
-      } catch (e) {
-        setUserLocation("Україна (Інтернет)");
-      }
-    };
-    fetchLocation();
-  }, []);
-
-  // --- ХЕНДЛЕРИ ---
-  const showError = (msg: string) => {
-    setErrorMsg(msg);
-    setTimeout(() => setErrorMsg(""), 3000);
-  };
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
@@ -217,65 +190,40 @@ export default function CBTPage() {
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-red-900/30 overflow-x-hidden font-mono flex flex-col items-center">
       {/* Глобальна помилка */}
-      {errorMsg && <ErrorAlert message={errorMsg} />}
+      {error && <ErrorAlert message={error} />}
 
       <main className="container mx-auto py-8 max-w-4xl min-h-screen flex flex-col items-center relative z-10">
         {loading && <CatSupportModal />}
         {isBanned && <BannedOverlay />}
 
         {!result ? (
-          /* ================= SEARCH MODE (СБУ STYLE) ================= */
-          <div className="w-full flex flex-col items-center text-center animate-fade-in-up">
-            {/* Іконка */}
-            <div className="mb-8 relative inline-flex items-center justify-center p-4 bg-neutral-950 border-2 border-neutral-800 rounded-sm overflow-hidden group">
-              <Siren className="w-8 h-8 text-red-600/80 relative z-10 animate-pulse" />
-            </div>
-
-            <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-4 leading-[0.9]">
+          <SearchMode
+          username={username}
+          setUsername={(val) => setUsername(val.toLowerCase())}
+          onGenerate={handleGenerate}
+          loading={loading}
+          icon={<Siren className="w-full h-full" />}
+          title={
+            <>
               ОПЕРАТИВНИЙ <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-slate-400 to-white">
                 РОЗШУК ФІГУРАНТА
               </span>
-            </h1>
-
-            <div className="flex items-center gap-4 opacity-50 mb-4">
+            </>
+          }
+          extraDecor={
+            <div className="flex items-center justify-center gap-4 opacity-50">
               <div className="h-[1px] w-8 bg-red-500" />
               <span className="text-red-500 text-[10px] font-mono uppercase tracking-widest">
                 Доступ до реєстру
               </span>
               <div className="h-[1px] w-8 bg-red-500" />
             </div>
-
-            <p className="text-neutral-400 text-xs md:text-sm mb-10 max-w-lg font-mono uppercase tracking-wider leading-relaxed">
-              Введіть позивний (нікнейм) об'єкта для перевірки по базах даних та
-              виявлення ознак деструктивної діяльності.
-            </p>
-
-            <div className="w-full max-w-sm space-y-6 relative z-10">
-              <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-red-500 transition-colors">
-                  <AtSign className="w-5 h-5" />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                  onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
-                  className="w-full pl-12 pr-4 py-4 bg-black border-2 border-neutral-800 text-white placeholder-neutral-600 font-bold uppercase font-mono text-lg shadow-[4px_4px_0px_0px_rgba(38,38,38,1)] focus:outline-none focus:border-red-700 focus:shadow-[4px_4px_0px_0px_#ef4444] transition-all rounded-none"
-                  placeholder="ПОЗИВНИЙ"
-                  spellCheck={false}
-                />
-              </div>
-
-              <button
-                onClick={handleGenerate}
-                disabled={loading || !username.trim()}
-                className="font-display w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-[0.15em] text-sm shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-100 hover:shadow-[2px_2px_0px_0px_#64748b] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-none flex items-center justify-center gap-3"
-              >
-                ЗАПИТ ДО АРХІВУ
-              </button>
-            </div>
-          </div>
+          }
+          description="Введіть позивний (нікнейм) об'єкта для перевірки по базах даних та виявлення ознак деструктивної діяльності."
+          buttonText="ЗАПИТ ДО АРХІВУ"
+          placeholder="ПОЗИВНИЙ"
+        />
         ) : (
           /* ================= RESULT MODE (DOSSIER STYLE) ================= */
           <div className="w-full flex flex-col items-center animate-slide-up">
@@ -452,32 +400,10 @@ export default function CBTPage() {
             </div>
 
             {/* --- ACTION BUTTONS --- */}
-            <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <button
-                onClick={handleShare}
-                disabled={isSharing}
-                className="group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
-              >
-                {isSharing ? (
-                  <RefreshCw className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Share2 className="w-5 h-5" />
-                )}
-                <span>
-                  {isSharing ? "ФОРМУЄМО СПРАВУ..." : "ЗЛИТИ В THREADS"}
-                </span>
-              </button>
-
-              <a
-                href={SITE_CONFIG.links.donate}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-4 bg-black text-neutral-400 border border-neutral-700 hover:text-white hover:border-white transition-all uppercase text-xs font-bold tracking-widest shadow-[4px_4px_0px_0px_rgba(38,38,38,1)]"
-              >
-                <Coffee className="w-4 h-4" />
-                <span>Хабар розробнику (Кава)</span>
-              </a>
-            </div>
+            <ActionButtons
+              handleShare={handleShare}
+              isSharing={isSharing}
+            />
           </div>
         )}
       </main>

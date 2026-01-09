@@ -1,5 +1,6 @@
 import { SITE_CONFIG } from "@/lib/constants";
 import { Fish } from "lucide-react";
+import { Button } from "./Button";
 interface CatSupportModalProps {
   isOpen?: boolean;
 }
@@ -29,15 +30,16 @@ export const CatSupportModal = ({ isOpen = true }: CatSupportModalProps) => {
             </p>
           </div>
 
-          <a
-            href={SITE_CONFIG?.links?.donate || "#"}
-            target="_blank"
+          <Button
+            variant="secondary"
+            href={SITE_CONFIG.links.donate}
             rel="noopener noreferrer"
-            className="group text-sm relative w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-2 bg-black text-white border-2 border-white font-bold uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:bg-[#111] hover:shadow-[4px_4px_0px_0px_#64748b] hover:border-slate-500 transition-all active:translate-y-1 active:shadow-none rounded-none"
+            className="w-full"
           >
             <Fish className="w-5 h-5 group-hover:text-slate-400 transition-colors" />
             <span>ПОГОДУВАТИ МУРЗІКУ</span>
-          </a>
+          </Button>
+
           <p className="text-[10px] text-center text-neutral-600 uppercase">
             MONOBANK БАНКА
           </p>

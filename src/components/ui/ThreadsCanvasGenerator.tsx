@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { Download, Palette, RefreshCcw, Coffee } from "lucide-react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { Palette, RefreshCcw } from "lucide-react";
 import { useSmartShare } from "@/hooks/use-smart-share";
+import { ActionButtons } from "../tools/ActionButtons";
 
 interface User {
   pk: string;
@@ -221,27 +221,11 @@ export default function ThreadsCanvasGenerator({
         * Генерація відбувається у реальному часі на вашому пристрої.
       </p>
 
-      {/* --- КНОПКИ --- */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-[400px]">
-        <button
-          onClick={handleShare}
-          disabled={isSharing}
-          className="col-span-2 group relative flex items-center justify-center gap-3 w-full py-4 bg-white text-black border-2 border-white font-bold uppercase tracking-widest shadow-[4px_4px_0px_0px_#64748b] hover:bg-neutral-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#64748b] transition-all"
-        >
-          <Download className="w-4 h-4" />
-          <span>Поділитись</span>
-        </button>
-
-        <a
-          href={SITE_CONFIG.links.donate}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="col-span-2 flex items-center justify-center gap-2 py-3 bg-black text-neutral-400 border border-white hover:text-white hover:border-white transition-all uppercase text-sm font-bold tracking-widest shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
-        >
-          <Coffee className="w-4 h-4" />
-          <span>Погодувати кота</span>
-        </a>
-      </div>
+      {/* --- ACTION BUTTONS --- */}
+      <ActionButtons
+        handleShare={handleShare}
+        isSharing={isSharing}
+      />
     </div>
   );
 }
