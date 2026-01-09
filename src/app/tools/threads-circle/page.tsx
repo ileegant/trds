@@ -59,9 +59,12 @@ export default function ThreadsCirclePage() {
 
       if (!response.ok) {
         // Обробка помилок від сервера
-        if (data.error === "USER_NOT_FOUND") throw new Error("Користувача не знайдено.");
-        if (data.error === "PRIVATE_PROFILE") throw new Error("Профіль закритий. Я не бачу пости.");
-        if (data.error === "NO_REPLIES") throw new Error("У профілі немає активності (реплаїв).");
+        if (data.error === "USER_NOT_FOUND")
+          throw new Error("Користувача не знайдено.");
+        if (data.error === "PRIVATE_PROFILE")
+          throw new Error("Профіль закритий. Я не бачу пости.");
+        if (data.error === "NO_REPLIES")
+          throw new Error("У профілі немає активності (реплаїв).");
         throw new Error(data.error || "Помилка сервера");
       }
 
@@ -77,7 +80,6 @@ export default function ThreadsCirclePage() {
       setTier2(result.tier2);
 
       setDataReady(true);
-
     } catch (err: any) {
       console.error(err);
       showError(err.message || "Щось пішло не так. Спробуй ще раз.");
@@ -96,27 +98,26 @@ export default function ThreadsCirclePage() {
 
         {!dataReady ? (
           <SearchMode
-          username={username}
-          setUsername={setUsername}
-          onGenerate={handleGenerate}
-          loading={loading}
-          icon={<Users className="w-full h-full" />}
-          title={
-            <>
-              Твоє Тредс{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
-                Оточення
-              </span>
-            </>
-          }
-          description={
-            <>
-              [SYSTEM]: Scanning social bubble protocol... <br />
-              Введи нікнейм, щоб згенерувати карту взаємодій.
-            </>
-          }
-          buttonText="ЗАПУСТИТИ АНАЛІЗ"
-        />
+            username={username}
+            setUsername={setUsername}
+            onGenerate={handleGenerate}
+            icon={<Users className="w-full h-full" />}
+            title={
+              <>
+                Твоє Тредс{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
+                  Оточення
+                </span>
+              </>
+            }
+            description={
+              <>
+                [SYSTEM]: Scanning social bubble protocol... <br />
+                Введи нікнейм, щоб згенерувати карту взаємодій.
+              </>
+            }
+            buttonText="ЗАПУСТИТИ АНАЛІЗ"
+          />
         ) : (
           <div className="w-full flex flex-col items-center animate-in fade-in duration-500">
             <div className="w-full flex justify-center pb-20">

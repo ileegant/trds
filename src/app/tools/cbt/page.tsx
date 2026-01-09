@@ -5,7 +5,6 @@ import { SUPERPOWERS_LIST } from "@/lib/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef } from "react";
 import {
-  AtSign,
   Siren,
   Fingerprint,
   FileWarning,
@@ -14,7 +13,12 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { THREATS, CBT_STATUSES, postRoasts, THREADS_ARCHETYPES } from "@/lib/content";
+import {
+  THREATS,
+  CBT_STATUSES,
+  postRoasts,
+  THREADS_ARCHETYPES,
+} from "@/lib/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
 import { useSmartShare } from "@/hooks/use-smart-share";
 import { useUserLocation } from "@/hooks/useUserLocation";
@@ -101,11 +105,10 @@ export default function CBTPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VibeResult | null>(null);
   const [isBanned, setIsBanned] = useState(false);
-  
+
   const { error, showError } = useErrorMessage();
   const userLocation = useUserLocation();
   const receiptRef = useRef<HTMLDivElement>(null);
-
 
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
@@ -136,14 +139,12 @@ export default function CBTPage() {
         return showError("Помилка з'єднання з архівом.");
       }
 
-
       const data = await response.json();
       console.log(data);
       console.log(cleanNick);
       console.log(cleanThreadsPost(data.posts) || []);
       console.log(data.user?.avatar || null);
       console.log(userLocation);
-
 
       const aiResult = generateVibe(
         cleanNick,
@@ -167,8 +168,8 @@ export default function CBTPage() {
     shareData: {
       title: "Досʼє ан мене.",
       text: `Нова база Тредчана в СБТ 📂🕵️\nПеревір себе: https://trds.fun/tools/cbt`,
-    }
-  })
+    },
+  });
 
   const generateCaseID = (name: string) => {
     if (!name) return "X-000";
@@ -198,32 +199,31 @@ export default function CBTPage() {
 
         {!result ? (
           <SearchMode
-          username={username}
-          setUsername={(val) => setUsername(val.toLowerCase())}
-          onGenerate={handleGenerate}
-          loading={loading}
-          icon={<Siren className="w-full h-full" />}
-          title={
-            <>
-              ОПЕРАТИВНИЙ <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-slate-400 to-white">
-                РОЗШУК ФІГУРАНТА
-              </span>
-            </>
-          }
-          extraDecor={
-            <div className="flex items-center justify-center gap-4 opacity-50">
-              <div className="h-[1px] w-8 bg-red-500" />
-              <span className="text-red-500 text-[10px] font-mono uppercase tracking-widest">
-                Доступ до реєстру
-              </span>
-              <div className="h-[1px] w-8 bg-red-500" />
-            </div>
-          }
-          description="Введіть позивний (нікнейм) об'єкта для перевірки по базах даних та виявлення ознак деструктивної діяльності."
-          buttonText="ЗАПИТ ДО АРХІВУ"
-          placeholder="ПОЗИВНИЙ"
-        />
+            username={username}
+            setUsername={(val) => setUsername(val.toLowerCase())}
+            onGenerate={handleGenerate}
+            icon={<Siren className="w-full h-full" />}
+            title={
+              <>
+                ОПЕРАТИВНИЙ <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-slate-400 to-white">
+                  РОЗШУК ФІГУРАНТА
+                </span>
+              </>
+            }
+            extraDecor={
+              <div className="flex items-center justify-center gap-4 opacity-50">
+                <div className="h-[1px] w-8 bg-red-500" />
+                <span className="text-red-500 text-[10px] font-mono uppercase tracking-widest">
+                  Доступ до реєстру
+                </span>
+                <div className="h-[1px] w-8 bg-red-500" />
+              </div>
+            }
+            description="Введіть позивний (нікнейм) об'єкта для перевірки по базах даних та виявлення ознак деструктивної діяльності."
+            buttonText="ЗАПИТ ДО АРХІВУ"
+            placeholder="ПОЗИВНИЙ"
+          />
         ) : (
           /* ================= RESULT MODE (DOSSIER STYLE) ================= */
           <div className="w-full flex flex-col items-center animate-slide-up">
@@ -400,10 +400,7 @@ export default function CBTPage() {
             </div>
 
             {/* --- ACTION BUTTONS --- */}
-            <ActionButtons
-              handleShare={handleShare}
-              isSharing={isSharing}
-            />
+            <ActionButtons handleShare={handleShare} isSharing={isSharing} />
           </div>
         )}
       </main>

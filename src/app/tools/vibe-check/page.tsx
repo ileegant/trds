@@ -140,9 +140,9 @@ export default function VibeCheckPage() {
     filePrefix: "vibe-check",
     shareData: {
       title: "Threads Vibe Check",
-      text: "Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.fun/tools/vibe-check\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹"
-    }
-  })
+      text: "Заціни мій вайб-чек у Threads 🧾✨\nЗробити собі: https://trds.fun/tools/vibe-check\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹",
+    },
+  });
 
   return (
     <div className="relative min-h-screen w-full bg-neutral-950 text-white selection:bg-slate-500/30 overflow-x-hidden font-mono">
@@ -154,29 +154,29 @@ export default function VibeCheckPage() {
 
         {!result ? (
           <SearchMode
-          variant="default"
-          username={username}
-          setUsername={(val) => setUsername(val.toLowerCase())}
-          onGenerate={handleGenerate}
-          loading={loading}
-          icon={<Receipt className="w-full h-full" />}
-          title={
-            <>
-              Чек твого{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
-                Тредсу
-              </span>
-            </>
-          }
-          description={
-            <>
-              Аналізуємо рівень токсичності, его, душності, ниття та успішного успіху.
-              <br />
-              Ваша мама каже, що ви класний, а ми скажемо правду.
-            </>
-          }
-          buttonText="Роздрукувати чек"
-        />
+            variant="default"
+            username={username}
+            setUsername={(val) => setUsername(val.toLowerCase())}
+            onGenerate={handleGenerate}
+            icon={<Receipt className="w-full h-full" />}
+            title={
+              <>
+                Чек твого{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-white">
+                  Тредсу
+                </span>
+              </>
+            }
+            description={
+              <>
+                Аналізуємо рівень токсичності, его, душності, ниття та успішного
+                успіху.
+                <br />
+                Ваша мама каже, що ви класний, а ми скажемо правду.
+              </>
+            }
+            buttonText="Роздрукувати чек"
+          />
         ) : (
           /* RESULT MODE */
           <div className="flex flex-col items-center animate-slide-up">
@@ -329,10 +329,7 @@ export default function VibeCheckPage() {
             </div>
 
             {/* --- ACTION BUTTONS --- */}
-            <ActionButtons
-              handleShare={handleShare}
-              isSharing={isSharing}
-            />
+            <ActionButtons handleShare={handleShare} isSharing={isSharing} />
           </div>
         )}
       </main>
