@@ -1,7 +1,7 @@
 "use client";
 
 import { BLACKLIST } from "@/lib/constants";
-import { SUPERPOWERS_LIST } from "@/lib/content";
+import { SUPERPOWERS_LIST } from "@/data/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef } from "react";
 import {
@@ -18,9 +18,9 @@ import {
   CBT_STATUSES,
   postRoasts,
   THREADS_ARCHETYPES,
-} from "@/lib/content";
+} from "@/data/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
-import { useSmartShare } from "@/hooks/use-smart-share";
+import { useSmartShare } from "@/hooks/useSmartShare";
 import { useUserLocation } from "@/hooks/useUserLocation";
 import { ActionButtons } from "@/components/tools/ActionButtons";
 import { useErrorMessage } from "@/hooks/useErrorMessage";

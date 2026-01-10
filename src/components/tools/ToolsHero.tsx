@@ -1,4 +1,4 @@
-export const PageHeader = () => {
+export const ToolsHero = () => {
   return (
     <div className="flex flex-col items-center text-center mb-14">
       <h1 className="font-display text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mb-6 leading-none">
@@ -10,7 +10,9 @@ export const PageHeader = () => {
       </h1>
 
       <p className="text-neutral-500 text-xs md:text-lg max-w-2xl font-mono leading-relaxed">
-        Думаєш, твої треди комусь цікаві? Досить жити в ілюзіях. Обирай генератор, вводь нік і готуйся плакати. Ми розберемо твій профіль на атоми.
+        Думаєш, твої треди комусь цікаві? Досить жити в ілюзіях. Обирай
+        генератор, вводь нік і готуйся плакати. Ми розберемо твій профіль на
+        атоми.
       </p>
     </div>
   );

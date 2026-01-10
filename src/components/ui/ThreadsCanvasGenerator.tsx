@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Palette, RefreshCcw } from "lucide-react";
-import { useSmartShare } from "@/hooks/use-smart-share";
+import { useSmartShare } from "@/hooks/useSmartShare";
 import { ActionButtons } from "../tools/ActionButtons";
 
 interface User {
@@ -163,16 +163,15 @@ export default function ThreadsCanvasGenerator({
     };
   }, [owner, tier1, tier2, bgColor]); // Перемальовуємо, якщо змінились дані або колір
 
-
   const { handleShare, isSharing } = useSmartShare({
     ref: canvasRef,
     username: owner.username,
     filePrefix: "threads-circle",
     shareData: {
       title: "Моє оточення в Threads саме краще",
-      text: "Моє оточення в Threads саме краще✨\nЗробити собі: https://trds.fun/tools/threads-circle\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹"
-    }
-  })
+      text: "Моє оточення в Threads саме краще✨\nЗробити собі: https://trds.fun/tools/threads-circle\nХочеш очистити карму? Скинь коту на елітну рибу!🐟👹",
+    },
+  });
 
   const colors = ["#1e1e1e", "#ffffff", "#fca5a5", "#86efac", "#fcd34d"];
 
@@ -222,10 +221,7 @@ export default function ThreadsCanvasGenerator({
       </p>
 
       {/* --- ACTION BUTTONS --- */}
-      <ActionButtons
-        handleShare={handleShare}
-        isSharing={isSharing}
-      />
+      <ActionButtons handleShare={handleShare} isSharing={isSharing} />
     </div>
   );
 }

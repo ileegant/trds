@@ -7,13 +7,13 @@ interface ActionButtonsProps {
   isSharing: boolean;
 }
 
-export const ActionButtons = ({ handleShare, isSharing }: ActionButtonsProps) => {
+export const ActionButtons = ({
+  handleShare,
+  isSharing,
+}: ActionButtonsProps) => {
   return (
     <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <Button
-        onClick={handleShare}
-        disabled={isSharing}
-      >
+      <Button onClick={handleShare} disabled={isSharing}>
         {isSharing ? (
           <RefreshCw className="w-5 h-5 animate-spin" />
         ) : (
@@ -21,7 +21,7 @@ export const ActionButtons = ({ handleShare, isSharing }: ActionButtonsProps) =>
         )}
         <span>{isSharing ? "Зберігаємо..." : "Поділитись в THREADS"}</span>
       </Button>
-           
+
       <Button
         variant="secondary"
         href={SITE_CONFIG.links.donate}

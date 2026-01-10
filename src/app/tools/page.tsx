@@ -1,7 +1,7 @@
 import { TOOLS } from "@/lib/constants";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { SecretToolCard } from "@/components/tools/SecretToolCard";
-import { PageHeader } from "@/components/tools/PageHeader";
+import { PageHeader } from "@/components/tools/ToolsHero";
 
 export default function BrowsePage() {
   return (

@@ -5,7 +5,7 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://trds.fun",
   developer: {
     name: "Oleh",
-    handle: "ileegant",
+    username: "ileegant",
     github: "https://github.com/ileegant",
   },
   links: {
@@ -31,7 +31,7 @@ export const BLACKLIST = [
   "vikki___iv",
 ];
 
-export const WHITELIST = [
+export const VIP_USERS = [
   "ileegant",
   "iyukkuri_",
   "trds.fun",

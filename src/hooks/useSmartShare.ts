@@ -29,29 +29,25 @@ export const useSmartShare = <T extends HTMLElement>({
   const handleShare = useCallback(async () => {
     const element = ref.current;
     if (!element || isSharing) return;
-    
+
     setIsSharing(true);
 
     try {
       let blob: Blob | null = null;
 
-      // 1. ПЕРЕВІРКА: Якщо це Canvas, використовуємо нативний метод (це фіксить проблему чорного екрану)
       if (element instanceof HTMLCanvasElement) {
         blob = await new Promise<Blob | null>((resolve) => {
-          // 'image/png' - формат, 1.0 - якість
-          element.toBlob((b) => resolve(b), 'image/png', 1.0);
+          element.toBlob((b) => resolve(b), "image/png", 1.0);
         });
       } else {
-        // 2. Якщо це звичайний DIV, використовуємо бібліотеку
         blob = await htmlToImageBlob(element, {
           cacheBust: true,
-          // Прибираємо чорний фон, ставимо null або transparent
-          backgroundColor: null as unknown as string, 
+          backgroundColor: null as unknown as string,
           skipFonts: true,
           filter: (node) => node.tagName !== "LINK" && node.tagName !== "STYLE",
-          pixelRatio: 2, // Для чіткості на Retina
+          pixelRatio: 2,
           style: {
-            borderRadius: "0px"
+            borderRadius: "0px",
           },
         });
       }
@@ -67,11 +63,13 @@ export const useSmartShare = <T extends HTMLElement>({
         files: [file],
       };
 
-      // Логіка шарінгу
-      if (navigator.share && navigator.canShare && navigator.canShare(finalShareData)) {
+      if (
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare(finalShareData)
+      ) {
         await navigator.share(finalShareData);
       } else {
-        // Фоллбек для десктопу (завантаження файлу)
         const link = document.createElement("a");
         link.download = fileName;
         link.href = URL.createObjectURL(blob);
@@ -83,7 +81,6 @@ export const useSmartShare = <T extends HTMLElement>({
     } catch (err: any) {
       console.error("Share error:", err);
       if (err.name !== "AbortError") {
-        // Можна додати toast notification тут
       }
     } finally {
       setIsSharing(false);

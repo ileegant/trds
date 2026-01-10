@@ -22,7 +22,7 @@ export function Header() {
         rel="noopener noreferrer"
         className="font-display text-[10px] opacity-70 whitespace-nowrap font-mono text-gray-400 hover:text-white hover:opacity-100 transition-all cursor-pointer underline decoration-transparent hover:decoration-white underline-offset-2"
       >
-        powered by {SITE_CONFIG.developer.handle}
+        powered by {SITE_CONFIG.developer.username}
       </a>
     </header>
   );

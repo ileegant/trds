@@ -2,10 +2,7 @@ import React from "react";
 import { AtSign } from "lucide-react";
 import { Button } from "../ui/Button";
 
-type SearchVariant = "sbu" | "threads" | "default";
-
 interface SearchModeProps {
-  variant?: SearchVariant;
   icon: React.ReactNode;
   title: React.ReactNode;
   description: React.ReactNode;

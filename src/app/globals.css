@@ -28,11 +28,9 @@
 
   100% {
     transform: translateX(-100%);
-    /* Рухаємо на 100% ширини САМОГО блоку */
   }
 }
 
 .animate-marquee {
   animation: marquee 30s linear infinite;
-  /* 30s - швидкість, регулюй під себе */
 }

@@ -1,14 +1,14 @@
 "use client";
 
 import { BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
-import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/lib/content";
+import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/data/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef } from "react";
 import Barcode from "react-barcode";
 import { Receipt } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { useSmartShare } from "@/hooks/use-smart-share";
+import { useSmartShare } from "@/hooks/useSmartShare";
 import { useUserLocation } from "@/hooks/useUserLocation";
 import { ActionButtons } from "@/components/tools/ActionButtons";
 import { useErrorMessage } from "@/hooks/useErrorMessage";

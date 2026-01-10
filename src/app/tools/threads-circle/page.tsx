@@ -5,7 +5,7 @@ import { Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { processThreadsContext } from "@/lib/threads-processor";
+import { processThreadsContext } from "@/lib/threads-analysis";
 import { BLACKLIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
