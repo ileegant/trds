@@ -154,7 +154,6 @@ export default function VibeCheckPage() {
 
         {!result ? (
           <SearchMode
-            variant="default"
             username={username}
             setUsername={(val) => setUsername(val.toLowerCase())}
             onGenerate={handleGenerate}

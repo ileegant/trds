@@ -5,7 +5,7 @@ import { Users } from "lucide-react";
 import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import { processThreadsContext } from "@/lib/threads-analysis";
+import { analyzeUserNetwork } from "@/lib/threads-analysis";
 import { BLACKLIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
@@ -71,13 +71,13 @@ export default function ThreadsCirclePage() {
       const postsData = data.posts || [];
       const repliesData = data.replies || [];
 
-      const result = await processThreadsContext(postsData, repliesData);
+      const result = await analyzeUserNetwork(postsData, repliesData);
 
       // 2. Якщо все ок, сервер вже повернув структуровані дані
       // { owner, tier1, tier2 } з готовими Base64 картинками
       setOwner(result.owner);
-      setTier1(result.tier1);
-      setTier2(result.tier2);
+      setTier1(result.topConnections);
+      setTier2(result.otherConnections);
 
       setDataReady(true);
     } catch (err: any) {
