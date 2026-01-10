@@ -28,7 +28,7 @@ export const BLACKLIST = [
   "riri_nka",
   "nastyapogorela",
   "na4asi.club",
-  "vikki___iv"
+  "vikki___iv",
 ];
 
 export const WHITELIST = [
@@ -54,7 +54,7 @@ export const WHITELIST = [
   "moralfaq_",
   "ffghisjkzkl",
   "rostikarts",
-  "chopers.wear"
+  "chopers.wear",
 ];
 
 export const RECEIPT_COLORS = [
@@ -62,7 +62,7 @@ export const RECEIPT_COLORS = [
   { hex: "#F4FF5F", name: "Acid Yellow" },
   { hex: "#FF9EAA", name: "Punk Pink" },
   { hex: "#A0E9FF", name: "Electric Blue" },
-  { hex: "#C7F9CC", name: "Mint Fresh" }
+  { hex: "#C7F9CC", name: "Mint Fresh" },
 ];
 
 export const TAG_STYLES: Record<string, string> = {
@@ -70,7 +70,7 @@ export const TAG_STYLES: Record<string, string> = {
   STABLE: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   AI: "bg-purple-500/10 text-purple-400 border-purple-500/20",
   NEW: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  BETA: "bg-slate-500/10 text-slate-400 border-slate-500/20"
+  BETA: "bg-slate-500/10 text-slate-400 border-slate-500/20",
 };
 
 export const TOOLS = [
@@ -80,7 +80,7 @@ export const TOOLS = [
     description: "Цей тест покаже хто твої ментально не здорові кєнти.",
     icon: Users,
     href: "tools/threads-circle",
-    tag: "NEW"
+    tag: "HOT",
   },
   {
     id: "cbt",
@@ -89,7 +89,7 @@ export const TOOLS = [
       "Дізнайся, чому тебе насправді не лайкають. Спойлер: справа не в тіньовому бані, а в тому, що ти душніла.",
     icon: Fingerprint,
     href: "tools/cbt",
-    tag: "NEW"
+    tag: "STABLE",
   },
   {
     id: "vibe",
@@ -98,6 +98,6 @@ export const TOOLS = [
       "Який колір твоєї аури в Threads? Токсичний зелений чи депресивний сірий?",
     icon: Receipt,
     href: "tools/vibe-check",
-    tag: "STABLE"
+    tag: "",
   },
 ];

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
+import { SupportUsers } from "../ui/SupportUsers";
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 w-full h-12 bg-[#0a0a0a] text-white flex items-center justify-between px-4 md:px-6 z-50 shadow-md select-none border-b border-white/5">
+    <header className="fixed top-0 left-0 w-full h-8 md:h-10 bg-[#0a0a0a] text-white flex items-center justify-between px-4 md:px-6 z-50 shadow-md select-none border-b border-white/5">
       <Link
         href="/"
         className="font-display font-bold tracking-widest text-xl md:text-2xl truncate mr-2 flex items-center gap-2 cursor-pointer hover:opacity-75 transition-opacity"

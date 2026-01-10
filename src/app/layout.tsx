@@ -9,6 +9,7 @@ import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 // Config
 import { SITE_CONFIG } from "@/lib/constants";
+import { SupportUsers } from "@/components/ui/SupportUsers";
 
 // Fonts setup
 const unbounded = Unbounded({
@@ -80,20 +81,19 @@ export default function RootLayout({
   const bodyClasses = [
     manrope.variable,
     unbounded.variable,
-    "antialiased min-h-screen flex flex-col bg-neutral-950 text-white"
+    "antialiased min-h-screen flex flex-col bg-neutral-950 text-white",
   ].join(" ");
 
   return (
     <html lang="uk">
-      <body
-        className={bodyClasses}
-      >
+      <body className={bodyClasses}>
         {/* Analytics */}
         <GoogleAnalytics />
 
         {/* UI elements */}
         <Snow />
         <Header />
+        <SupportUsers />
 
         <main className="flex-1 flex flex-col px-4 pt-8 pb-6 bg-neutral-950">
           {children}
