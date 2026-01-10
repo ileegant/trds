@@ -27,9 +27,7 @@ export default function ThreadsCirclePage() {
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
 
-    if (!cleanNick) {
-      return showError("Введи нікнейм, екстрасенси у відпустці.");
-    }
+    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
       setIsBanned(true);
@@ -37,6 +35,7 @@ export default function ThreadsCirclePage() {
     }
 
     setLoading(true);
+
     setOwner(null);
     setTier1([]);
     setTier2([]);
@@ -44,7 +43,7 @@ export default function ThreadsCirclePage() {
 
     try {
       // 1. Робимо запит на НАШ API (який ми створили на попередньому кроці)
-      const responsePromise = fetch("/api/get-threads", {
+      const responsePromise = fetch("/api/threads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: cleanNick }),
@@ -57,32 +56,21 @@ export default function ThreadsCirclePage() {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        // Обробка помилок від сервера
-        if (data.error === "USER_NOT_FOUND")
-          throw new Error("Користувача не знайдено.");
-        if (data.error === "PRIVATE_PROFILE")
-          throw new Error("Профіль закритий. Я не бачу пости.");
-        if (data.error === "NO_REPLIES")
-          throw new Error("У профілі немає активності (реплаїв).");
-        throw new Error(data.error || "Помилка сервера");
-      }
+      if (!response.ok) return showError(data.error);
 
       const postsData = data.posts || [];
       const repliesData = data.replies || [];
 
       const result = await analyzeUserNetwork(postsData, repliesData);
 
-      // 2. Якщо все ок, сервер вже повернув структуровані дані
-      // { owner, tier1, tier2 } з готовими Base64 картинками
       setOwner(result.owner);
       setTier1(result.topConnections);
       setTier2(result.otherConnections);
 
       setDataReady(true);
-    } catch (err: any) {
-      console.error(err);
-      showError(err.message || "Щось пішло не так. Спробуй ще раз.");
+    } catch (error) {
+      setLoading(false);
+      showError("Критична помилка сервера.");
     } finally {
       setLoading(false);
     }

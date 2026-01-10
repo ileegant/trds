@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Snowfall from "react-snowfall";
 
 export function Snow() {
-  // 👇 Явно вказуємо тип масиву для TypeScript
   const [snowflakeImages, setSnowflakeImages] = useState<HTMLImageElement[]>(
     []
   );
@@ -13,7 +12,6 @@ export function Snow() {
     if (typeof window !== "undefined") {
       const image = new Image();
 
-      // Сіра зірочка під Nardo Grey стиль (slate-400)
       const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
           <text x="50%" y="70%" font-size="30" fill="#94a3b8" text-anchor="middle" font-family="monospace" font-weight="bold">*</text>

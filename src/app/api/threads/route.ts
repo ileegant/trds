@@ -3,9 +3,18 @@ import { fetchThreadsUserData } from "@/lib/threads-client";
 import { fetchImageToBase64 } from "@/lib/image-utils";
 
 const ERROR_MAPPING: Record<string, { message: string; status: number }> = {
-  USER_NOT_FOUND: { message: "User not found", status: 404 },
-  PRIVATE_PROFILE: { message: "Private profile", status: 403 },
-  NO_REPLIES: { message: "No replies", status: 422 },
+  USER_NOT_FOUND: {
+    message: "Це твій уявний друг? Threads про нього не чув.",
+    status: 404,
+  },
+  PRIVATE_PROFILE: {
+    message: "Ого, які ми загадкові. Профіль закритий, кіна не буде.",
+    status: 403,
+  },
+  NO_REPLIES: {
+    message: "Це акаунт для сталкінгу колишніх? Де пости, алло?",
+    status: 422,
+  },
 };
 
 export async function POST(req: Request) {
@@ -45,8 +54,9 @@ export async function POST(req: Request) {
       );
     }
 
-    console.error("[Threads API Error]:", error);
-
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Щось Threads тупить. Спробуй пізніше." },
+      { status: 500 }
+    );
   }
 }

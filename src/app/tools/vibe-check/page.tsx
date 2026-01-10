@@ -55,7 +55,6 @@ const generateVibe = (
 export default function VibeCheckPage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [_, setLoadingStep] = useState("");
   const [result, setResult] = useState<VibeResult | null>(null);
   const [isBanned, setIsBanned] = useState(false);
   const [receiptBg, setReceiptBg] = useState(RECEIPT_COLORS[0].hex);
@@ -78,7 +77,7 @@ export default function VibeCheckPage() {
     setResult(null);
 
     try {
-      const responsePromise = fetch("/api/get-threads", {
+      const responsePromise = fetch("/api/threads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: cleanNick }),
@@ -89,48 +88,23 @@ export default function VibeCheckPage() {
         new Promise((resolve) => setTimeout(resolve, 3000)),
       ]);
 
+      const data = await response.json();
+
       if (!response.ok) {
         setLoading(false);
-        setLoadingStep("");
-
-        let message = "";
-
-        switch (response.status) {
-          case 404:
-            message = "Це твій уявний друг? Threads про нього не чув.";
-            break;
-          case 403:
-            message = "Ого, які ми загадкові. Профіль закритий, кіна не буде.";
-            break;
-          case 422:
-            message = "Це акаунт для сталкінгу колишніх? Де пости, алло?";
-            break;
-          case 500:
-          default:
-            message = "Щось Threads тупить. Спробуй пізніше.";
-            break;
-        }
-
-        showError(message);
-        return;
+        return showError(data.error);
       }
-
-      const data = await response.json();
 
       const postsData = data.posts || [];
       const avatarData = data.user?.avatar || null;
 
-      setLoadingStep("Фіналізуємо чек...");
-
-      const aiResult = generateVibe(cleanNick, postsData, avatarData);
-      setResult(aiResult);
+      const result = generateVibe(cleanNick, postsData, avatarData);
+      setResult(result);
     } catch (error) {
-      console.warn("Global Error (Network etc)", error);
-
       setLoading(false);
-      showError("Немає з'єднання з сервером 😢");
+      showError("Критична помилка сервера.");
     } finally {
-      if (!result) setLoading(false);
+      setLoading(false);
     }
   };
 

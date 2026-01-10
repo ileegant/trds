@@ -26,7 +26,7 @@ import { ActionButtons } from "@/components/tools/ActionButtons";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
 import { SearchMode } from "@/components/tools/SearchMode";
 
-interface VibeStats {
+interface CBTStats {
   threatLevel: string; // Замість toxicity
   threatScore: number;
   status: string; // Замість ego
@@ -40,22 +40,22 @@ interface EvidenceItem {
   note: string;
 }
 
-interface VibeResult {
+interface CBTResult {
   nickname: string;
   archetype: string; // "Вердикт"
   superpower: string; // "Стаття звинувачення"
-  stats: VibeStats;
+  stats: CBTStats;
   roast: string; // "Вирок"
   avatar?: string;
   evidence: EvidenceItem[];
 }
 
-const generateVibe = (
+const generateCBT = (
   username: string,
   posts: string[],
   avatar?: string,
   location?: string
-): VibeResult => {
+): CBTResult => {
   const textSeed = posts.length > 0 ? posts.join("").length : username.length;
   const nameSeed = username
     .split("")
@@ -103,7 +103,7 @@ const generateVibe = (
 export default function CBTPage() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<VibeResult | null>(null);
+  const [result, setResult] = useState<CBTResult | null>(null);
   const [isBanned, setIsBanned] = useState(false);
 
   const { error, showError } = useErrorMessage();
@@ -113,7 +113,7 @@ export default function CBTPage() {
   const handleGenerate = async () => {
     const cleanNick = username.replace("@", "").trim().toLowerCase();
 
-    if (!cleanNick) return showError("Введіть позивний об'єкта!");
+    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
 
     if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
       setIsBanned(true);
@@ -124,35 +124,31 @@ export default function CBTPage() {
     setResult(null);
 
     try {
-      const response = await fetch("/api/get-threads", {
+      const responsePromise = await fetch("/api/threads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: cleanNick }),
       });
 
-      if (!response.ok) {
-        setLoading(false);
-        if (response.status === 404)
-          return showError("Об'єкт не знайдено в базі.");
-        if (response.status === 403)
-          return showError("Досьє засекречено (Приватний профіль).");
-        return showError("Помилка з'єднання з архівом.");
-      }
+      const [response] = await Promise.all([
+        responsePromise,
+        new Promise((resolve) => setTimeout(resolve, 3000)),
+      ]);
 
       const data = await response.json();
-      console.log(data);
-      console.log(cleanNick);
-      console.log(cleanThreadsPost(data.posts) || []);
-      console.log(data.user?.avatar || null);
-      console.log(userLocation);
 
-      const aiResult = generateVibe(
+      if (!response.ok) {
+        setLoading(false);
+        return showError(data.error);
+      }
+
+      const result = generateCBT(
         cleanNick,
         cleanThreadsPost(data.posts) || [],
         data.user?.avatar || null,
         userLocation
       );
-      setResult(aiResult);
+      setResult(result);
     } catch (error) {
       setLoading(false);
       showError("Критична помилка сервера.");
