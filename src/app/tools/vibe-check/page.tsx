@@ -1,7 +1,6 @@
 "use client";
 
-import { BLACKLIST, RECEIPT_COLORS } from "@/lib/constants";
-import { ARCHETYPES_LIST, SUPERPOWERS_LIST, ROASTS_LIST } from "@/data/content";
+import { RECEIPT_COLORS } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef } from "react";
 import Barcode from "react-barcode";
@@ -13,99 +12,34 @@ import { useUserLocation } from "@/hooks/useUserLocation";
 import { ActionButtons } from "@/components/tools/ActionButtons";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
 import { SearchMode } from "@/components/tools/SearchMode";
-
-interface VibeStats {
-  toxicity: number;
-  ego: number;
-  boringness: number;
-}
-
-interface VibeResult {
-  archetype: string;
-  superpower: string;
-  stats: VibeStats;
-  roast: string;
-  avatar?: string;
-}
-
-const generateVibe = (
-  username: string,
-  posts: string[],
-  avatar?: string
-): VibeResult => {
-  const textSeed = posts.length > 0 ? posts.join("").length : username.length;
-  const nameSeed = username
-    .split("")
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const seed = nameSeed + textSeed;
-
-  return {
-    archetype: ARCHETYPES_LIST[seed % ARCHETYPES_LIST.length],
-    superpower: SUPERPOWERS_LIST[seed % SUPERPOWERS_LIST.length],
-    stats: {
-      toxicity: (seed * 13) % 100,
-      ego: (seed * 7) % 100,
-      boringness: (seed * 23) % 100,
-    },
-    roast: ROASTS_LIST[seed % ROASTS_LIST.length],
-    avatar: avatar,
-  };
-};
+import { useThreadsProcessor } from "@/hooks/useThreadsProcessor";
+import { type VibeResult, generateVibe } from "@/lib/vibe-generator";
 
 export default function VibeCheckPage() {
   const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VibeResult | null>(null);
   const [isBanned, setIsBanned] = useState(false);
   const [receiptBg, setReceiptBg] = useState(RECEIPT_COLORS[0].hex);
   const { error, showError } = useErrorMessage();
+  const { loading, processUser } = useThreadsProcessor({
+    showError,
+    setIsBanned,
+  });
 
   const userLocation = useUserLocation();
   const receiptRef = useRef<HTMLDivElement>(null);
 
   const handleGenerate = async () => {
-    const cleanNick = username.replace("@", "").trim().toLowerCase();
-
-    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
-
-    if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
-      setIsBanned(true);
-      return;
-    }
-
-    setLoading(true);
     setResult(null);
 
-    try {
-      const responsePromise = fetch("/api/threads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: cleanNick }),
-      });
-
-      const [response] = await Promise.all([
-        responsePromise,
-        new Promise((resolve) => setTimeout(resolve, 3000)),
-      ]);
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setLoading(false);
-        return showError(data.error);
-      }
-
-      const postsData = data.posts || [];
-      const avatarData = data.user?.avatar || null;
-
-      const result = generateVibe(cleanNick, postsData, avatarData);
+    processUser(username, (data, cleanNick) => {
+      const result = generateVibe(
+        cleanNick,
+        data.posts || [],
+        data.user?.avatar
+      );
       setResult(result);
-    } catch (error) {
-      setLoading(false);
-      showError("Критична помилка сервера.");
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   const { handleShare, isSharing } = useSmartShare({

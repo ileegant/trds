@@ -6,17 +6,19 @@ import ThreadsCanvasGenerator from "@/components/ui/ThreadsCanvasGenerator";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
 import { analyzeUserNetwork } from "@/lib/threads-analysis";
-import { BLACKLIST } from "@/lib/constants";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
 import { SearchMode } from "@/components/tools/SearchMode";
+import { useThreadsProcessor } from "@/hooks/useThreadsProcessor";
 
 export default function ThreadsCirclePage() {
   const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
   const [isBanned, setIsBanned] = useState(false);
-
   const { error, showError } = useErrorMessage();
+  const { loading, processUser } = useThreadsProcessor({
+    showError,
+    setIsBanned,
+  });
   // Data State
   const [owner, setOwner] = useState<any>(null);
   const [tier1, setTier1] = useState<any[]>([]);
@@ -25,55 +27,22 @@ export default function ThreadsCirclePage() {
 
   // --- MAIN HANDLER ---
   const handleGenerate = async () => {
-    const cleanNick = username.replace("@", "").trim().toLowerCase();
-
-    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
-
-    if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
-      setIsBanned(true);
-      return;
-    }
-
-    setLoading(true);
-
     setOwner(null);
     setTier1([]);
     setTier2([]);
     setDataReady(false);
 
-    try {
-      // 1. Робимо запит на НАШ API (який ми створили на попередньому кроці)
-      const responsePromise = fetch("/api/threads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: cleanNick }),
-      });
-
-      const [response] = await Promise.all([
-        responsePromise,
-        new Promise((resolve) => setTimeout(resolve, 3000)),
-      ]);
-
-      const data = await response.json();
-
-      if (!response.ok) return showError(data.error);
-
-      const postsData = data.posts || [];
-      const repliesData = data.replies || [];
-
-      const result = await analyzeUserNetwork(postsData, repliesData);
+    processUser(username, async (data) => {
+      const result = await analyzeUserNetwork(
+        data.posts || [],
+        data.replies || []
+      );
 
       setOwner(result.owner);
       setTier1(result.topConnections);
       setTier2(result.otherConnections);
-
       setDataReady(true);
-    } catch (error) {
-      setLoading(false);
-      showError("Критична помилка сервера.");
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (

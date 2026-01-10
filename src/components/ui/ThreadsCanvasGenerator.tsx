@@ -176,7 +176,7 @@ export default function ThreadsCanvasGenerator({
   const colors = ["#1e1e1e", "#ffffff", "#fca5a5", "#86efac", "#fcd34d"];
 
   return (
-    <div className="flex flex-col items-center w-full py-8 bg-neutral-900 border-t border-neutral-800 px-4">
+    <div className="flex flex-col items-center w-full py-8 px-4">
       {/* --- КОНТРОЛЕРИ --- */}
       <div className="flex gap-2 bg-neutral-800 p-2 rounded-full border border-neutral-700 overflow-x-auto max-w-full mb-8 shadow-lg scrollbar-hide">
         <Palette className="w-5 h-5 text-neutral-400 ml-2 mr-1 self-center flex-shrink-0" />

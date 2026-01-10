@@ -1,7 +1,5 @@
 "use client";
 
-import { BLACKLIST } from "@/lib/constants";
-import { SUPERPOWERS_LIST } from "@/data/content";
 import BannedOverlay from "@/components/ui/BannedOverlay";
 import { useState, useRef } from "react";
 import {
@@ -13,135 +11,32 @@ import {
 } from "lucide-react";
 import { CatSupportModal } from "@/components/ui/CatSupportModal";
 import { ErrorAlert } from "@/components/ui/ErrorAlert";
-import {
-  THREATS,
-  CBT_STATUSES,
-  postRoasts,
-  THREADS_ARCHETYPES,
-} from "@/data/content";
 import { cleanThreadsPost } from "@/lib/cleaners";
 import { useSmartShare } from "@/hooks/useSmartShare";
 import { useUserLocation } from "@/hooks/useUserLocation";
 import { ActionButtons } from "@/components/tools/ActionButtons";
 import { useErrorMessage } from "@/hooks/useErrorMessage";
 import { SearchMode } from "@/components/tools/SearchMode";
-
-interface CBTStats {
-  threatLevel: string; // Замість toxicity
-  threatScore: number;
-  status: string; // Замість ego
-  location: string;
-}
-
-interface EvidenceItem {
-  id: number;
-  text: string;
-  date: string;
-  note: string;
-}
-
-interface CBTResult {
-  nickname: string;
-  archetype: string; // "Вердикт"
-  superpower: string; // "Стаття звинувачення"
-  stats: CBTStats;
-  roast: string; // "Вирок"
-  avatar?: string;
-  evidence: EvidenceItem[];
-}
-
-const generateCBT = (
-  username: string,
-  posts: string[],
-  avatar?: string,
-  location?: string
-): CBTResult => {
-  const textSeed = posts.length > 0 ? posts.join("").length : username.length;
-  const nameSeed = username
-    .split("")
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const seed = nameSeed + textSeed;
-
-  // Генеруємо "Докази" з постів (або фейкові, якщо постів мало)
-  const evidenceList: EvidenceItem[] = posts.slice(0, 3).map((post, i) => ({
-    id: i,
-    text: post.length > 100 ? post.substring(0, 100) + "..." : post,
-    date: new Date(Date.now() - i * 86400000 * (seed % 5)).toLocaleDateString(),
-    note: ["ПІДОЗРІЛО", "ЗРАДА", "КРІНЖ", "ІПСО"][seed % 4],
-  }));
-
-  // Якщо постів немає, додаємо заглушку
-  if (evidenceList.length === 0) {
-    evidenceList.push({
-      id: 99,
-      text: "Активність прихована. Підозрюваний використовує VPN або режим інкогніто.",
-      date: "СЬОГОДНІ",
-      note: "НЕВІДОМО",
-    });
-  }
-
-  const threatScores = Object.keys(THREATS).map(Number); // [5, 20, 40, 60, 80, 95, 100]
-  const score = threatScores[seed % threatScores.length]; // Беремо конкретне число зі списку
-  const label = THREATS[score as keyof typeof THREATS]; // Беремо відповідний текст
-
-  return {
-    nickname: username,
-    archetype: THREADS_ARCHETYPES[seed % THREADS_ARCHETYPES.length], // Використовуємо як головний "Типаж"
-    superpower: SUPERPOWERS_LIST[seed % SUPERPOWERS_LIST.length], // Використовуємо як "Особливу прикмету"
-    stats: {
-      threatLevel: label,
-      threatScore: score,
-      status: CBT_STATUSES[seed % CBT_STATUSES.length],
-      location: location || "Невідома локація",
-    },
-    roast: postRoasts[seed % postRoasts.length], // Вирок
-    avatar: avatar,
-    evidence: evidenceList,
-  };
-};
+import { useThreadsProcessor } from "@/hooks/useThreadsProcessor";
+import { type CBTResult, generateCBT } from "@/lib/cbt-generator";
 
 export default function CBTPage() {
   const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CBTResult | null>(null);
   const [isBanned, setIsBanned] = useState(false);
-
   const { error, showError } = useErrorMessage();
+  const { loading, processUser } = useThreadsProcessor({
+    showError,
+    setIsBanned,
+  });
+
   const userLocation = useUserLocation();
   const receiptRef = useRef<HTMLDivElement>(null);
 
   const handleGenerate = async () => {
-    const cleanNick = username.replace("@", "").trim().toLowerCase();
-
-    if (!cleanNick) return showError("А кому ми чек друкувати будемо? Собі?");
-
-    if (BLACKLIST.some((banned) => cleanNick.includes(banned))) {
-      setIsBanned(true);
-      return;
-    }
-
-    setLoading(true);
     setResult(null);
 
-    try {
-      const responsePromise = await fetch("/api/threads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: cleanNick }),
-      });
-
-      const [response] = await Promise.all([
-        responsePromise,
-        new Promise((resolve) => setTimeout(resolve, 3000)),
-      ]);
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setLoading(false);
-        return showError(data.error);
-      }
-
+    processUser(username, (data, cleanNick) => {
       const result = generateCBT(
         cleanNick,
         cleanThreadsPost(data.posts) || [],
@@ -149,12 +44,7 @@ export default function CBTPage() {
         userLocation
       );
       setResult(result);
-    } catch (error) {
-      setLoading(false);
-      showError("Критична помилка сервера.");
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   const { handleShare, isSharing } = useSmartShare({
@@ -162,7 +52,7 @@ export default function CBTPage() {
     username: username,
     filePrefix: "cbt",
     shareData: {
-      title: "Досʼє ан мене.",
+      title: "Досʼє на мене.",
       text: `Нова база Тредчана в СБТ 📂🕵️\nПеревір себе: https://trds.fun/tools/cbt`,
     },
   });
@@ -170,12 +60,9 @@ export default function CBTPage() {
   const generateCaseID = (name: string) => {
     if (!name) return "X-000";
 
-    const clean = name.replace(/@/g, "").toUpperCase(); // Прибираємо @, робимо капсом
-    const first = clean.charAt(0); // Перша буква
-    const last = clean.charAt(clean.length - 1); // Остання буква
-
-    // Рахуємо суму ASCII кодів букв (щоб "alex" і "axel" мали різні, але схожі коди)
-    // Додаємо множник (i + 1), щоб порядок букв мав значення
+    const clean = name.replace(/@/g, "").toUpperCase();
+    const first = clean.charAt(0);
+    const last = clean.charAt(clean.length - 1);
     const uniqueCode = clean
       .split("")
       .reduce((acc, char, i) => acc + char.charCodeAt(0) * (i + 1), 0);
